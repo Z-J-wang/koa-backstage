@@ -1,4 +1,4 @@
-# backstage-management-system
+# koa-backstage
 > 本项目基于 koa 搭建的后台 server。项目运行使用了 nodemon
 
 ## Project setup
