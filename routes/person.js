@@ -7,28 +7,39 @@ const basicinfon = new basicInfoBll();
 
 router.prefix('/person')
 
-router.get('/', async function (ctx, next) {
-    console.log("The table for the User model was just (re)created!");
+router.get('/getBasicinfo', async function (ctx, next) {
+    try {
+        const findall = await basicinfon.findOne();
+        ctx.body = findall
 
-    const findall = await basicinfon.findOne();
+    } catch (error) {
+        console.log(error);
 
-    ctx.body = findall
+        ctx.body = "数据库出错"
+    }
+
 })
 
-router.get('/bar', function (ctx, next) {
-    ctx.body = 'this is a users/bar response'
+router.post('/create', async function (ctx, next) {
+    const changeData = ctx.request.body
+    let result = '';
+    try {
+        result = await basicinfon.createBasicinfo(changeData);
+    } catch (error) {
+        result = error
+    }
+
+    ctx.body = result
 })
 
 router.post('/update', async function (ctx, next) {
 
     const changeData = ctx.request.body
-    await basicinfon.updated(changeData)
-    
     try {
-
-        ctx.body = true;
+        ctx.body = await basicinfon.updated(changeData);
     } catch (error) {
-        ctx.body = error;
+        console.log(error)
+        ctx.body = "数据库出错";
     }
 
 })

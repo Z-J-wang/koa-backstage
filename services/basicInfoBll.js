@@ -1,32 +1,54 @@
 const basicinfoDao = require('../dao').basicinfoDao;
 
 class BasicinfoService {
-    constructor(){
+    constructor() {
         this._basicinfoDao = new basicinfoDao();
+    }
+
+
+    /**
+     * 新增一条记录
+     * @param {object} newBasicinfo 
+     */
+    async createBasicinfo(newBasicinfo) {
+        return await this._basicinfoDao.insert(newBasicinfo);
     }
 
     /**
      * 获取全部数据
      */
-    async findAll(){
+    async findAll() {
         return await this._basicinfoDao.findAll();
     }
 
     /**
      * 获取 basicinfo 表的第一条记录
      */
-    async findOne(){
-        return await this._basicinfoDao.findOne();
+    async findOne() {
+        const info = await this._basicinfoDao.findOne();
+
+        // 将形如“xx-xx”地址转化为数组
+        info.placeOfBirth = info.placeOfBirth.split('-');
+        info.presentAddress =  info.presentAddress.split('-');
+
+        return info;
     }
 
     /**
      * 更新 basicinfo 新增
      * @param {object} changeObj 修改的值
      */
-    async updated(changeObj){
-        const info = await this.findOne();
-        const cond = {id: info.id}
-        return await this._basicinfoDao.updated(changeObj, cond);
+    async updated(changeObj) {
+        try {
+            const info = await this.findOne();
+            const cond = {
+                id: info.id
+            }
+
+            return await this._basicinfoDao.updated(changeObj, cond);
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
 

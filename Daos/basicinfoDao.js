@@ -5,6 +5,18 @@ class BasicinfoDao {
     constructor() {}
 
     /**
+     * 新增一条记录
+     * @param {object} newBasicinfo 
+     */
+    async insert(newBasicinfo) {
+        try {
+            return basicinfo.create(newBasicinfo)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    /**
      * 获取全部数据
      */
     async findAll() {
@@ -30,7 +42,9 @@ class BasicinfoDao {
         if (!condObj) {
             return false;
         }
-        return await basicinfo.update(updateObj, { where : condObj})
+        return await basicinfo.update(updateObj, {
+            where: condObj
+        })
     }
 }
 
