@@ -7,7 +7,7 @@ const basicinfo = sequelize.defineModel('basicinfo', {
         type: DataTypes.BOOLEAN,
         defaultValue: true
     },
-    birthday: DataTypes.DATE,
+    birthday: DataTypes.DATEONLY,
     placeOfBirth: DataTypes.STRING,
     nationality: DataTypes.STRING,
     presentAddress: DataTypes.STRING,

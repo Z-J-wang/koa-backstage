@@ -11,6 +11,10 @@ const sequelize = new Sequelize(sqlConfig.DATABASE, sqlConfig.USERNAME, sqlConfi
         min: 0,
         idle: 10000
     },
+    dialectOptions: {
+        dateStrings: true,
+        typeCast: true
+    },
     timezone: '+08:00' //东八时
 })
 
