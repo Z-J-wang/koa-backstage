@@ -1,5 +1,5 @@
 const {DataTypes} = require('sequelize')
-const sequelize = require('../sqlConfig/dbConn');
+const sequelize = require('../../sqlConfig/dbConn');
 
 const experience = sequelize.defineModel('experience', {
     name: DataTypes.STRING,

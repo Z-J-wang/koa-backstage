@@ -1,5 +1,5 @@
 const {DataTypes} = require('sequelize')
-const sequelize = require('../sqlConfig/dbConn');
+const sequelize = require('../../sqlConfig/dbConn');
 
 const basicinfo = sequelize.defineModel('basicinfo', {
     name: DataTypes.STRING,

@@ -1,6 +1,7 @@
-const fs = require('fs');
+const path = require('path')
+const { readFileList } = require('./public/js/common');
 
-let files = fs.readdirSync(__dirname + '/Daos');
+let files = readFileList(__dirname + '/Daos');
 
 let js_files = files.filter((f)=>{
     return f.endsWith('.js');
@@ -9,8 +10,9 @@ let js_files = files.filter((f)=>{
 module.exports = {};
 
 for (let f of js_files) {
-    console.log(`import Dao from file ${f}...`);
     // 用文件名做key
-    let name = f.substring(0, f.length - 3);
-    module.exports[name] = require(__dirname + '/Daos/' + f);
+    let name =  path.basename(f).split('.')[0];
+    console.log(`import Dao from file ${name}...`);
+
+    module.exports[name] = require(f);
 }

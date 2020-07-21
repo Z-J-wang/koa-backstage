@@ -1,6 +1,6 @@
-const basicinfo = require('../model').basicinfo;
+const experience = require('../../model').experience;
 
-class BasicinfoDao {
+class ExperienceDao {
 
     constructor() {}
 
@@ -9,18 +9,14 @@ class BasicinfoDao {
      * @param {object} newBasicinfo 
      */
     async insert(newBasicinfo) {
-        try {
-            return basicinfo.create(newBasicinfo)
-        } catch (error) {
-            console.log(error);
-        }
+        return experience.create(newBasicinfo)
     }
 
     /**
      * 获取全部数据
      */
     async findAll() {
-        return await basicinfo.findAll();
+        return await experience.findAll();
     }
 
     /**
@@ -28,7 +24,7 @@ class BasicinfoDao {
      * @param {object} condObj 查询条件 默认为空对象
      */
     async findOne(condObj = {}) {
-        return await basicinfo.findOne({
+        return await experience.findOne({
             where: condObj
         });
     }
@@ -42,10 +38,10 @@ class BasicinfoDao {
         if (!condObj) {
             return false;
         }
-        return await basicinfo.update(updateObj, {
+        return await experience.update(updateObj, {
             where: condObj
         })
     }
 }
 
-module.exports = BasicinfoDao;
+module.exports = ExperienceDao;

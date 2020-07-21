@@ -16,7 +16,6 @@ if (process.env.NODE_ENV === 'test') {
     try {
         if (fs.statSync(overrideConfig).isFile()) {
             console.log(`Load ${overrideConfig}...`);
-            console.log(require(overrideConfig))
             config = Object.assign(config, require(overrideConfig));
         }
     } catch (err) {
