@@ -44,7 +44,9 @@ class BasicinfoService {
             const cond = {
                 id: info.id
             }
-
+            changeObj.placeOfBirth = changeObj.placeOfBirth.join('-');
+            changeObj.presentAddress = changeObj.presentAddress.join('-');
+            
             return await this._basicinfoDao.updated(changeObj, cond);
         } catch (error) {
             console.log(error)

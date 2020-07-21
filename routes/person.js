@@ -11,7 +11,6 @@ router.get('/getBasicinfo', async function (ctx, next) {
     try {
         const findall = await basicinfon.findOne();
         ctx.body = findall
-
     } catch (error) {
         console.log(error);
 
