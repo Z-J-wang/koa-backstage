@@ -5,7 +5,7 @@ const basicInfoBll = require('../service').basicInfoBll
 const basicinfon = new basicInfoBll();
 
 
-router.prefix('/person')
+router.prefix('/api/person')
 
 router.get('/getBasicinfo', async function (ctx, next) {
     try {
