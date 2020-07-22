@@ -13,18 +13,13 @@ class ProductDao {
     }
 
     /**
-     * 获取全部数据
-     */
-    async findAll() {
-        return await product.findAll();
-    }
-
-    /**
-     * 获取第一条记录
+     * 条件查询
      * @param {object} condObj 查询条件 默认为空对象
      */
-    async findOne(condObj = {}) {
-        return await product.findOne({
+    async find(condObj = {}) {
+        return await product.findAll({
+            raw: true,
+            order:[],
             where: condObj
         });
     }

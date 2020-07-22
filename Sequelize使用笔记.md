@@ -322,4 +322,23 @@ app.on('error', (err, ctx) => {
 
 module.exports = app
 ```
+## Sequelize 条件查询
+```js
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
+User.findAll({
+ raw: true,
+  order: [
+      ['name', 'DESC']
+  ],  // 排序
+  where: {
+    // name: 'cheny', // 精确查询
+    mobile_no: {
+      // 模糊查询
+      [Op.like]:'%' +mobile_no + '%'
+    }
+  },
+  attributes:['id','name']， // 控制查询字段
+})
+```
