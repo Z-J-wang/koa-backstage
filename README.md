@@ -45,3 +45,6 @@ tskill <pid>
 > ##### subject
 > `subject` 是 commit 目的的简短描述，不超过50个字符。
 >***
+
+#### res.code
+1. 
