@@ -46,5 +46,26 @@ tskill <pid>
 > `subject` 是 commit 目的的简短描述，不超过50个字符。
 >***
 
-#### res.code
-1. 
+#### response
+回传格式：
+```js
+response = {
+  status: 200,  // 请求状态
+  message: 'OK',    // 请求状态信息
+  header: [Object: null prototype] {    // 头部
+    vary: 'Origin',
+    'content-type': 'application/json; charset=utf-8'
+  },
+  body: {   // 回传给用户的数据
+      code: 1000,    // 后台操作结果编号
+      msg: ""       // 后台操作结果消息
+      data: '该产品已经存在！'  // 后台传给前端的数据
+      }
+}
+```
+系统中，给前端回传的信息一律通过 `body`.
+只能改动 `body` 属性，其他属性如非必要，不允许改动。
+
+##### body.code 的编码
+1. 1000：操作成功
+2. 5000：操作失败

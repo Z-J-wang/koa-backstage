@@ -17,8 +17,8 @@ class BasicinfoService {
     /**
      * 获取全部数据
      */
-    async findAll() {
-        return await this._productDao.findAll();
+    async find(params) {
+        return await this._productDao.find(params);
     }
 
     /**

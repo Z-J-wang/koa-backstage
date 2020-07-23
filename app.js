@@ -9,6 +9,7 @@ const logger = require('koa-logger')
 const index = require('./routes/index')
 const users = require('./routes/users')
 const person = require('./routes/person')
+const bmyx = require('./routes/bmyx')
 const cors = require('koa2-cors')
 
 // error handler
@@ -55,6 +56,7 @@ app.use(
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(person.routes(), person.allowedMethods())
+app.use(bmyx.routes(), bmyx.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

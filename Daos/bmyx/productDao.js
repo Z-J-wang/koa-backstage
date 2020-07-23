@@ -1,4 +1,4 @@
-const product = require('../../model').Product;
+const product = require('../../model').product;
 
 class ProductDao {
 
