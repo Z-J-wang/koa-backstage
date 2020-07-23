@@ -22,22 +22,10 @@ class BasicinfoService {
     }
 
     /**
-     * 获取 basicinfo 表的第一条记录
-     */
-    async findOne() {
-        const info = await this._productDao.findOne();
-
-        return info;
-    }
-
-    /**
      * 更新 basicinfo 新增
      * @param {object} changeObj 修改的值
      */
     async updated(changeObj) {
-        if (changeObj.id) {
-            return 400;
-        }
         const cond = {
             id: changeObj.id
         }

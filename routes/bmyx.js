@@ -18,6 +18,7 @@ router.get('/getData', async function (ctx, next) {
         res_msg = "查询成功！";
         res_data = await productBll.find(cond);
     } catch (error) {
+        res_code = 5000;
         console.log(error)
         res_msg = "后台出错！"
         res_data = error;
@@ -51,6 +52,7 @@ router.post('/createProduct', async function (ctx, next) {
 
     } catch (error) {
         console.log(error)
+        res_code = 5000;
         res_msg = "后台出错！"
         res_data = error;
     } finally {
@@ -62,18 +64,30 @@ router.post('/createProduct', async function (ctx, next) {
     }
 })
 
-router.post('/update', async function (ctx, next) {
-
+router.post('/updateProduct', async function (ctx, next) {
     const changeData = ctx.request.body
+    let res_data,
+        res_code,
+        res_msg;
     try {
         let ret = await productBll.updated(changeData);
-        if (ret === 400) {
-            ctx.code = 4000
+        if (ret) {
+            res_data = ret;
+            res_code = 1000;
+            res_msg = "更新成功"
+        } else {
+            res_code = 5000;
+            res_msg = "更新失败";
         }
-        ctx.body = await productBll.updated(changeData);
     } catch (error) {
         console.log(error)
         ctx.body = "数据库出错";
+    } finally {
+        ctx.body = {
+            code: res_code,
+            msg: res_msg,
+            data: res_data,
+        }
     }
 
 })
