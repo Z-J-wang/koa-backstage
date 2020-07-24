@@ -1,12 +1,17 @@
 const router = require('koa-router')()
 const ProductBll = require('../service').productBll
+const SortOfProductBll = require('../service').sortOfProductBll
 
 
 const productBll = new ProductBll();
+const sortOfProductBll = new SortOfProductBll();
 
 
 router.prefix('/api/bmyx')
 
+/**
+ * 获取产品数据
+ */
 router.get('/getData', async function (ctx, next) {
     const cond = ctx.request.body
     let res_data,
@@ -31,6 +36,9 @@ router.get('/getData', async function (ctx, next) {
     }
 })
 
+/**
+ * 新增一条产品记录
+ */
 router.post('/createProduct', async function (ctx, next) {
     const newData = ctx.request.body
     console.log(newData)
@@ -64,6 +72,9 @@ router.post('/createProduct', async function (ctx, next) {
     }
 })
 
+/**
+ * 修改产品信息
+ */
 router.post('/updateProduct', async function (ctx, next) {
     const changeData = ctx.request.body
     let res_data,
@@ -92,15 +103,16 @@ router.post('/updateProduct', async function (ctx, next) {
 
 })
 
+/**
+ * 删除一条产品数据
+ */
 router.post('/delProduct', async function (ctx, next) {
     const cond = ctx.request.body
-    console.log(cond)
     let res_data,
         res_code,
         res_msg;
     try {
         let ret = await productBll.delete(cond);
-        console.log(ret)
         if (ret) {
             res_data = ret;
             res_code = 1000;
@@ -119,6 +131,42 @@ router.post('/delProduct', async function (ctx, next) {
             data: res_data,
         }
     }
+
+    /**
+     * 新增一条产品记录
+     */
+    router.post('/createSort', async function (ctx, next) {
+        const newData = ctx.request.body
+        console.log(newData)
+        let res_data,
+            res_code,
+            res_msg;
+        try {
+            let ret = await productBll.find({
+                name: newData.name
+            })
+            if (ret.length > 0) {
+                res_code = 5000;
+                res_msg = "该产品已经存在！"
+            } else {
+                res_code = 1000;
+                res_msg = "新增成功";
+                res_data = await productBll.createOne(newData);
+            }
+
+        } catch (error) {
+            console.log(error)
+            res_code = 5000;
+            res_msg = "后台出错！"
+            res_data = error;
+        } finally {
+            ctx.body = {
+                code: res_code,
+                msg: res_msg,
+                data: res_data,
+            }
+        }
+    })
 
 })
 

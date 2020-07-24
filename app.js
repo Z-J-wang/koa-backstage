@@ -5,12 +5,13 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
+const cors = require('koa2-cors')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
 const person = require('./routes/person')
-const bmyx = require('./routes/bmyx')
-const cors = require('koa2-cors')
+const bmyx_product = require('./routes/bmyx/Product')
+const bmyx_sortOfProduct = require('./routes/bmyx/SortOfProduct')
 
 // error handler
 onerror(app)
@@ -56,7 +57,8 @@ app.use(
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(person.routes(), person.allowedMethods())
-app.use(bmyx.routes(), bmyx.allowedMethods())
+app.use(bmyx_product.routes(), bmyx_product.allowedMethods())
+app.use(bmyx_sortOfProduct.routes(), bmyx_sortOfProduct.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
