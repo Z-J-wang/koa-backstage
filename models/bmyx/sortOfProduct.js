@@ -3,7 +3,7 @@ const {
 } = require('sequelize')
 const sequelize = require('../../sqlConfig/dbConn');
 
-const table = sequelize.defineModel('sortOfProduct', {
+const table = sequelize.defineModel('sortofproduct', {
     name: {
         type: DataTypes.STRING,
         unique: true
@@ -11,7 +11,7 @@ const table = sequelize.defineModel('sortOfProduct', {
 })
 
 table.sync({
-    alter: true
+    alert: true
 });
 
 module.exports = table;

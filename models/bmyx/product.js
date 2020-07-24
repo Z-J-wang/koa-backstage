@@ -1,22 +1,28 @@
-const {
-    DataTypes
-} = require('sequelize')
+const sortofproduct = require('./sortofproduct');
+
+const Sequelize = require('sequelize')
 const sequelize = require('../../sqlConfig/dbConn');
 
 const product = sequelize.defineModel('product', {
     name: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         unique: true
     }, // 产品名字
-    sort: DataTypes.STRING, // 分类
-    nowPrice: DataTypes.DECIMAL(10, 2), // 今天价格
-    oldPrice: DataTypes.DECIMAL(10, 2), // 昨天价格
-    imgSrc: DataTypes.STRING, // 图片
-    detail: DataTypes.STRING // 介绍
+    nowPrice: Sequelize.DECIMAL(10, 2), // 今天价格
+    oldPrice: Sequelize.DECIMAL(10, 2), // 昨天价格
+    imgSrc: Sequelize.STRING, // 图片
+    detail: Sequelize.STRING // 介绍
 })
 
+// sortofproduct.hasOne(product)
+product.belongsTo(sortofproduct, {
+    as: 'sort',
+    foreignKey: 's_Id',
+    targetKey: 'id'
+});
+
 product.sync({
-    alter: true
+    alert: true
 });
 
 module.exports = product;

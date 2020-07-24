@@ -1,5 +1,5 @@
 const product = require('../../model').product;
-
+const sortofproduct = require('../../model').sortofproduct;
 class ProductDao {
 
     constructor() { }
@@ -17,10 +17,16 @@ class ProductDao {
      * @param {object} condObj 查询条件 默认为空对象
      */
     async find(condObj = {}) {
+ 
         return await product.findAll({
             raw: true,
             order: [],
-            where: condObj
+            where: condObj,
+            include: [{
+                model: sortofproduct,
+                as: "sort",
+                attributes: ['name'],  // 查询 sortofproduct 表的name字段
+            }]
         });
     }
 
