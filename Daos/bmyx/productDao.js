@@ -2,7 +2,7 @@ const product = require('../../model').product;
 
 class ProductDao {
 
-    constructor() {}
+    constructor() { }
 
     /**
      * 新增一条记录
@@ -19,7 +19,7 @@ class ProductDao {
     async find(condObj = {}) {
         return await product.findAll({
             raw: true,
-            order:[],
+            order: [],
             where: condObj
         });
     }
@@ -36,6 +36,14 @@ class ProductDao {
         return await product.update(updateObj, {
             where: condObj
         })
+    }
+
+    /**
+ * 删除
+ * @param {object} id 
+ */
+    async delete(id) {
+        return await product.destroy({ where: id });
     }
 }
 

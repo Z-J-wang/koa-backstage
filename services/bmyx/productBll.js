@@ -32,6 +32,14 @@ class BasicinfoService {
 
         return await this._productDao.updated(changeObj, cond);
     }
+
+    /**
+     * 删除
+     * @param {object} id 
+     */
+    async delete(id){
+        return await this._productDao.delete(id);
+    }
 }
 
 module.exports = BasicinfoService;
