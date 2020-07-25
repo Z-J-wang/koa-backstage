@@ -9,7 +9,8 @@ router.prefix('/api/bmyx')
  * 获取产品数据
  */
 router.get('/getData', async function (ctx, next) {
-    const cond = ctx.request.body
+    const query = ctx.request.query;
+
     let res_data,
         res_code,
         res_msg;
@@ -17,7 +18,7 @@ router.get('/getData', async function (ctx, next) {
     try {
         res_code = 1000;
         res_msg = "查询成功！";
-        res_data = await productBll.find(cond);
+        res_data = await productBll.find(query);
     } catch (error) {
         res_code = 5000;
         console.log(error)

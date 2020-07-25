@@ -14,7 +14,6 @@ const product = sequelize.defineModel('product', {
     detail: Sequelize.STRING // 介绍
 })
 
-// sortofproduct.hasOne(product)
 product.belongsTo(sortofproduct, {
     as: 'sort',
     foreignKey: 's_Id',
