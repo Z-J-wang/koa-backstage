@@ -29,7 +29,7 @@ class BasicinfoService {
 
         // 将形如“xx-xx”地址转化为数组
         info.placeOfBirth = info.placeOfBirth.split('-');
-        info.presentAddress =  info.presentAddress.split('-');
+        info.presentAddress = info.presentAddress.split('-');
 
         return info;
     }
@@ -39,18 +39,15 @@ class BasicinfoService {
      * @param {object} changeObj 修改的值
      */
     async updated(changeObj) {
-        try {
-            const info = await this.findOne();
-            const cond = {
-                id: info.id
-            }
-            changeObj.placeOfBirth = changeObj.placeOfBirth.join('-');
-            changeObj.presentAddress = changeObj.presentAddress.join('-');
-            
-            return await this._basicinfoDao.updated(changeObj, cond);
-        } catch (error) {
-            console.log(error)
+        const info = await this.findOne();
+        const cond = {
+            id: info.id
         }
+        changeObj.placeOfBirth = changeObj.placeOfBirth.join('-');
+        changeObj.presentAddress = changeObj.presentAddress.join('-');
+
+        return await this._basicinfoDao.updated(changeObj, cond);
+
     }
 }
 

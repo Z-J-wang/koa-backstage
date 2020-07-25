@@ -37,7 +37,6 @@ router.get('/getSort', async function (ctx, next) {
  */
 router.post('/createSort', async function (ctx, next) {
     const newData = ctx.request.body
-    console.log(newData)
     let res_data,
         res_code,
         res_msg;

@@ -38,7 +38,6 @@ router.get('/getData', async function (ctx, next) {
  */
 router.post('/createProduct', async function (ctx, next) {
     const newData = ctx.request.body
-    console.log(newData)
     let res_data,
         res_code,
         res_msg;
