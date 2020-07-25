@@ -342,3 +342,35 @@ User.findAll({
   attributes:['id','name']， // 控制查询字段
 })
 ```
+****
+## 外键
+```js
+product.belongsTo(sortofproduct, {
+    as: 'sort',
+    foreignKey: 's_Id', // 外键名
+    targetKey: 'id'     // 不设定，则默认id字段
+});
+```
+
+上面的设定是，在`product`表添加一个外键`s_Id`，关联的是表`sortofproduct`的`id`。并且重命名为`sortofproduct`为`sort`。
+
+```js
+// findAndCountAll这个API既查找还统计满足条件的记录数
+await StudentModel.findAndCountAll({
+    where: criteria, // 这里传入的是一个查询对象，因为我的查询条件是动态的，所以前面构建好后才传入，而不是写死
+    offset: start, // 前端分页组件传来的起始偏移量
+    limit: Number(pageSize), // 前端分页组件传来的一页显示多少条
+    include: [{ // include关键字表示关联查询
+        model: ClassModel, // 指定关联的model
+        as:'cla', // 由于前面建立映射关系时为class表起了别名，那么这里也要与前面保持一致，否则会报错
+        attributes: [['name','className'], 'rank'], // 这里的attributes属性表示查询class表的name和rank字段，其中对name字段起了别名className
+    }],
+    raw:true // 这个属性表示开启原生查询，原生查询支持的功能更多，自定义更强
+}).then(
+    result => {
+        total = result.count; // 如果成功，则可以获取到记录条数
+        list = result.rows; // 如果成功，则可以获取到记录集合
+    }).catch(err => {
+    getLogger().error("xxx-findAndCountAll occur error:", err);
+});
+```
