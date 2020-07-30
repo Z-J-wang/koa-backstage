@@ -1,4 +1,4 @@
-const model = require('../../model').sortOfProduct;
+const model = require('../../model').sortofproduct;
 
 class Dao {
 
