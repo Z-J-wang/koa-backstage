@@ -96,7 +96,8 @@ router.post('/updateProduct', async function (ctx, next) {
     try {
         let ret = await productBll.updated(changeData);
         if (ret) {
-            res_data = ret;
+            
+            res_data = await productBll.find(0, 10, {id : ret});
             res_code = 1000;
             res_msg = "更新成功"
         } else {
