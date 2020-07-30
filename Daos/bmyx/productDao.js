@@ -1,5 +1,5 @@
 const product = require('../../model').product;
-const sortofproduct = require('../../model').sortofproduct;
+const sortofproduct = require('../../model').sortOfProduct;
 class ProductDao {
 
     constructor() { }

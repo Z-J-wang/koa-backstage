@@ -1,8 +1,8 @@
-const model = require('../../model').sortofproduct;
+const model = require('../../model').sortOfProduct;
 
 class Dao {
 
-    constructor() { }
+    constructor() {}
 
     /**
      * 新增一条记录
