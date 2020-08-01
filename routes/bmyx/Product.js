@@ -214,6 +214,9 @@ router.post('/uploadImage', upload.single('file'), async function (ctx, next) {
     }
 })
 
+/**
+ * 删除图片
+ */
 router.post('/delUploadImage', async function (ctx, next) {
     const filename = ctx.request.body.filename;
     console.log(filename)

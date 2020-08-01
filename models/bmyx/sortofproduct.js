@@ -8,6 +8,7 @@ const table = sequelize.defineModel('sortofproduct', {
         type: DataTypes.STRING,
         unique: true
     }, // 类别名称
+    imgSrc: DataTypes.STRING, // 图片
 })
 
 table.sync({
