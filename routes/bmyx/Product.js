@@ -27,7 +27,39 @@ router.prefix('/api/bmyx')
  */
 router.get('/getData', async function (ctx, next) {
     const query = ctx.request.query;
+    const params = {
+        start: query.start,
+        pageSize: query.pageSize
+    }
 
+    let res_data,
+        res_code,
+        res_msg;
+
+    try {
+        res_code = 1000;
+        res_msg = "查询成功！";
+        res_data = await productBll.find(params);
+    } catch (error) {
+        res_code = 5000;
+        console.log(error)
+        res_msg = "后台出错！"
+        res_data = error;
+    } finally {
+        ctx.body = {
+            code: res_code,
+            msg: res_msg,
+            data: res_data,
+        }
+    }
+})
+
+/**
+ * 获取产品数据
+ */
+router.post('/getProductsByCond', async function (ctx, next) {
+    const query = ctx.request.body;
+    console.log(query)
     let res_data,
         res_code,
         res_msg;

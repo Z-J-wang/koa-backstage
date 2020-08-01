@@ -16,14 +16,13 @@ class ProductDao {
      * 条件查询
      * @param {object} condObj 查询条件 默认为空对象
      */
-    async find(start, pageSize, condObj = {}) {
-
+    async find(start, pageSize, condObj) {
         return await product.findAndCountAll({
             raw: true,
             order: [],
             offset: Number(start) || 0, // 前端分页组件传来的起始偏移量
             limit: Number(pageSize) || 10, // 前端分页组件传来的一页显示多少条
-            where: condObj,
+            where: condObj || {},
             include: [{
                 model: sortofproduct,
                 as: "sort",
