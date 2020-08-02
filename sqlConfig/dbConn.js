@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const sqlConfig = require('./index');
+const moment = require('moment')
 
 console.log('init sequelize...');
 
@@ -61,11 +62,19 @@ function defineModel(name, attributes) {
     };
     attrs.createdAt = {
         type: Sequelize.BIGINT,
-        allowNull: false
+        allowNull: false,
+        get() {
+            const createdAt = this.getDataValue('createdAt')
+            return moment(createdAt).format('YYYY-MM-DD');
+        }
     };
     attrs.updatedAt = {
         type: Sequelize.BIGINT,
-        allowNull: false
+        allowNull: false,
+        get() {
+            const updatedAt = this.getDataValue('updatedAt')
+            return moment(updatedAt).format('YYYY-MM-DD');
+        }
     };
     attrs.version = {
         type: Sequelize.BIGINT,
