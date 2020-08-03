@@ -1,4 +1,4 @@
-const model = require('../../model').sortofproduct;
+const model = require('../../model').notice;
 
 class Dao {
 
@@ -8,8 +8,8 @@ class Dao {
      * 新增一条记录
      * @param {object} newItem
      */
-    async insert(newItem) {
-        return model.create(newItem)
+    async insert() {
+        return model.create({ content: '', scrollable: true})
     }
 
     /**
@@ -17,11 +17,7 @@ class Dao {
      * @param {object} condObj 查询条件 默认为空对象
      */
     async find(condObj = {}) {
-        return await model.findAll({
-            raw: true,
-            order: [],
-            where: condObj
-        });
+        return await model.findOne();
     }
 
     /**
