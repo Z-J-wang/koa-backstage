@@ -374,3 +374,16 @@ await StudentModel.findAndCountAll({
     getLogger().error("xxx-findAndCountAll occur error:", err);
 });
 ```
+
+## Sequelize 联表查询
+
+```js
+    product.findAndCountAll({
+        where: {id: 1}
+        include: [{
+            model: sortofproduct,
+            as: "sort",
+            attributes: ['name'],  // 查询 sortofproduct 表的name字段
+        }]
+```
+注意：如果查询条件为附属表的属性,则需要有$$包裹属性。如：` where: {"$sort.id$": 1}`
