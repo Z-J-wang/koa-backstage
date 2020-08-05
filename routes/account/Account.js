@@ -1,15 +1,44 @@
 const router = require('koa-router')()
-const SortOfProductBll = require('../../service').sortOfProductBll
+const AccountBll = require('../../service').accountBll
 
 
-const service = new SortOfProductBll();
+const service = new AccountBll();
 
-router.prefix('/api/bmyx')
+router.prefix('/api/account')
 
 /**
- * 获取产品数据
+ * 获取全部账号
  */
-router.get('/getSort', async function (ctx, next) {
+router.post('/login', async function (ctx, next) {
+    const account = ctx.request.body
+    let res_data,
+        res_code,
+        res_msg;
+
+    try {
+        let ret = await service.login(account);
+        res_code = ret.code;
+        res_msg = ret.msg;
+    } catch (error) {
+        res_code = 5000;
+        console.log(error)
+        res_msg = "后台出错！"
+        res_data = error;
+    } finally {
+        ctx.body = {
+            code: res_code,
+            msg: res_msg,
+            data: res_data,
+        }
+    }
+})
+
+
+/**
+ * 获取全部账号
+ */
+router.get('/getAccountByCond', async function (ctx, next) {
+    const query = ctx.request.query;
     let res_data,
         res_code,
         res_msg;
@@ -17,7 +46,7 @@ router.get('/getSort', async function (ctx, next) {
     try {
         res_code = 1000;
         res_msg = "查询成功！";
-        res_data = await service.find();
+        res_data = await service.find(query);
     } catch (error) {
         res_code = 5000;
         console.log(error)
@@ -33,16 +62,16 @@ router.get('/getSort', async function (ctx, next) {
 })
 
 /**
- * 新增一条产品记录
+ * 新增一个账号
  */
-router.post('/createSort', async function (ctx, next) {
-    const newData = ctx.request.body
+router.post('/createAccount', async function (ctx, next) {
+    const newAccount = ctx.request.body
     let res_data,
         res_code,
         res_msg;
     try {
         let ret = await service.find({
-            name: newData.name
+            account: newAccount.account
         })
         if (ret && ret.length > 0) {
             res_code = 5000;
@@ -50,7 +79,7 @@ router.post('/createSort', async function (ctx, next) {
         } else {
             res_code = 1000;
             res_msg = "新增成功";
-            res_data = await service.createOne(newData);
+            res_data = await service.createOne(newAccount);
         }
 
     } catch (error) {
@@ -70,7 +99,7 @@ router.post('/createSort', async function (ctx, next) {
 /**
  * 修改产品信息
  */
-router.post('/updateSort', async function (ctx, next) {
+router.post('/updateAccount', async function (ctx, next) {
     const changeData = ctx.request.body
     let res_data,
         res_code,
@@ -101,7 +130,7 @@ router.post('/updateSort', async function (ctx, next) {
 /**
  * 删除一条产品数据
  */
-router.post('/delSort', async function (ctx, next) {
+router.post('/delAccount', async function (ctx, next) {
     const cond = ctx.request.body
     let res_data,
         res_code,

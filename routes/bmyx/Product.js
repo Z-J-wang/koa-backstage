@@ -94,7 +94,7 @@ router.post('/createProduct', async function (ctx, next) {
         let ret = await productBll.find({
             name: newData.name
         })
-        if (ret.length > 0) {
+        if (ret && ret.length > 0) {
             res_code = 5000;
             res_msg = "该产品已经存在！"
         } else {
