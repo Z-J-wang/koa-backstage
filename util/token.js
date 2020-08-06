@@ -1,5 +1,8 @@
 const jwt = require('jsonwebtoken');
-const secret = require('./secret')
+const secret = require('./secret');
+const AccountDao = require('../dao').accountDao;
+
+const Dao = new AccountDao();
 
 /**
  * 生成Token
@@ -32,7 +35,25 @@ function createToken(name, auth) {
     return ret;
 }
 
+/**
+ * 通过 token 查询数据库中是否存在该 token。
+ * @param {*} token 
+ */
+async function isAuthorization(token){
+    let flat = false;
+    let select_ret = await Dao.findOne({token: token});
+    if(select_ret){
+        let verify_ret = this.verifyToken(select_ret.token)
+        if(verify_ret){
+            flat = true
+        }
+    }
+
+    return flat;
+}
+
 module.exports = {
     createToken,
-    verifyToken
+    verifyToken,
+    isAuthorization
 }

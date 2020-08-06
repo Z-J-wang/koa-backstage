@@ -43,14 +43,16 @@ app.use(async (ctx, next) => {
 /**
  * token 验证
  */
-function tokenFilter(ctx) {
+async function tokenFilter(ctx) {
+    // 过滤 OPTIONS 请求
+    if(ctx.method == 'OPTIONS'){
+        return false;
+    }
     let url = ctx.url;
     let allowpage = ['/api/account/login'];
     let token = ctx.header.authorization;
-
     if (allowpage.indexOf(url) <= -1) {
-        let decoded = tokenFn.verifyToken(token)
-        if (!decoded) {
+        if (await tokenFn.isAuthorization(token)) {
             ctx.body={
                 code: 401,
                 msg: "token 验证失败",

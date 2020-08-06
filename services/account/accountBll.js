@@ -95,6 +95,14 @@ class Service {
     }
 
     /**
+     * 条件查询一条记录
+     * @param {object} params 
+     */
+    async findOne(params){
+        return await this._dao.findOne(params);
+    }
+
+    /**
      * 更新 basicinfo 新增
      * @param {object} changeObj 修改的值
      */
