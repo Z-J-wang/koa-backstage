@@ -20,15 +20,37 @@ class Service {
             ret_msg = "没有当前账户信息";
             ret_code = 3000;
         } else if (encrypt.comparePwd(pwd, accountInfo.password)) {
-            ret_code = 1000;
             ret_token = jwt.createToken(accountInfo.account, accountInfo.auth);
-            ret_msg = "登录成功！"
+            let ret = await this.updatedToken(accountInfo, ret_token)
+            if(ret){
+                ret_code = 1000;
+                ret_msg = "登录成功！"
+            }else{
+                ret_code = 3000;
+                ret_msg = "数据库出错！"
+            }
         } else {
             ret_code = 3000;
             ret_msg = "密码错误！"
         }
 
         return { msg: ret_msg, code: ret_code, token: ret_token };
+    }
+
+    /**
+     * 将 Token 插入账户信息
+     * @param {*} accountInfo 账户信息
+     * @param {*} token 
+     */
+    async updatedToken(accountInfo, token){
+        let flat = false;
+        let ret = await this._dao.updated({ token: token }, { id: accountInfo.id});
+
+        if (ret && ret.length > 0){
+            flat = true
+        }
+
+        return flat;
     }
 
     /**
