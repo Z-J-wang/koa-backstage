@@ -14,6 +14,7 @@ const bmyx_product = require('./routes/bmyx/Product')
 const bmyx_sortOfProduct = require('./routes/bmyx/SortOfProduct')
 const bmyx_Notice = require('./routes/bmyx/Notice')
 const account = require('./routes/account/Account')
+const tokenFn = require('./util/token')
 
 // error handler
 onerror(app)
@@ -34,9 +35,29 @@ app.use(views(__dirname + '/views', {
 app.use(async (ctx, next) => {
     const start = new Date()
     await next();
+    tokenFilter(ctx)
     const ms = new Date() - start
     console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
+
+/**
+ * token 验证
+ */
+function tokenFilter(ctx) {
+    let url = ctx.url;
+    let allowpage = ['/api/account/login'];
+    let token = ctx.header.authorization;
+
+    if (allowpage.indexOf(url) <= -1) {
+        let decoded = tokenFn.verifyToken(token)
+        if (!decoded) {
+            ctx.body={
+                code: 401,
+                msg: "token 验证失败",
+            }
+        }
+    }
+}
 
 // 配置跨域
 app.use(

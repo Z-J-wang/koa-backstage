@@ -19,16 +19,17 @@ function createToken(name, auth) {
  * 验证Token
  * @param {string} token 
  */
-function verifyToken(token) {
+ function verifyToken(token) {
+    let ret = {};
     jwt.verify(token, secret, (err, decoded) => {
         if (err) {
-            console.log(err);
-
-            return;
+            return false;
         }
 
-        return decoded;
+        ret = decoded
     })
+
+    return ret;
 }
 
 module.exports = {
