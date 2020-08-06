@@ -1,4 +1,6 @@
 const Dao = require('../../dao').accountDao;
+const jwt = require('../../util/token');
+const encrypt = require('../../util/encrypt');
 
 class Service {
     constructor() {
@@ -6,31 +8,61 @@ class Service {
     }
 
 
-    async login(params){
+    async login(params) {
         let ret_msg = '';
         let ret_code = 5000;
+        let ret_token = '';
         let account = params.account;
         let pwd = params.password;
-        let accountInfo = await this._dao.find({ account: account});
-        if (accountInfo == null){
+        let accountInfo = await this._dao.findOne({ account: account });
+
+        if (accountInfo == null) {
             ret_msg = "没有当前账户信息";
-            ret_code = 2000;
-        } else if (pwd === accountInfo.password){
+            ret_code = 3000;
+        } else if (encrypt.comparePwd(pwd, accountInfo.password)) {
             ret_code = 1000;
+            ret_token = jwt.createToken(accountInfo.account, accountInfo.auth);
             ret_msg = "登录成功！"
         } else {
             ret_code = 3000;
             ret_msg = "密码错误！"
         }
 
-        return {msg: ret_msg, code: ret_code};
+        return { msg: ret_msg, code: ret_code, token: ret_token };
     }
+
     /**
      * 新增一条记录
-     * @param {object} newRecord 
+     * @param {object} newRecord
      */
     async createOne(newRecord) {
-        return await this._dao.insert(newRecord);
+        const res = {
+            code: 1000,
+            msg: '',
+            data: {}
+        };
+
+        let hasOne = await this._dao.find({
+            account: newRecord.account
+        })
+
+        if (hasOne && hasOne.length > 0) {
+            res.code = 5000;
+            res.msg = "账户已经存在！";
+        } else if (newRecord.account.length < 6 && newRecord.account.length > 18) {
+            res.code = 3000;
+            res.msg = "账户长度应该改6至18个字符长度间！";
+        } else if (newRecord.password.length < 6 && newRecord.password.length > 18) {
+            res.code = 3000;
+            res.msg = "密码长度应该改6至18个字符长度间！";
+        } else {
+            newRecord.password = encrypt.encryptPwd(newRecord.password);
+            res.code = 1000;
+            res.msg = "账户添加成功！"
+            res.data = await this._dao.insert(newRecord);
+        }
+
+        return res;
     }
 
     /**

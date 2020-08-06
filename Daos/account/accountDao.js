@@ -23,6 +23,16 @@ class Dao {
     }
 
     /**
+     * 条件查询
+     * @param {object} condObj 查询条件 默认为空对象
+     */
+    async findOne(condObj = {}) {
+        return await model.findOne({
+            where: condObj
+        });
+    }
+
+    /**
      * 更新
      * @param {object} updateObj 要更新的字段对象
      * @param {*} condObj 条件

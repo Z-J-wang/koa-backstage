@@ -19,6 +19,9 @@ router.post('/login', async function (ctx, next) {
         let ret = await service.login(account);
         res_code = ret.code;
         res_msg = ret.msg;
+        res_data = {
+            token: ret.token
+        }
     } catch (error) {
         res_code = 5000;
         console.log(error)
@@ -66,22 +69,16 @@ router.get('/getAccountByCond', async function (ctx, next) {
  */
 router.post('/createAccount', async function (ctx, next) {
     const newAccount = ctx.request.body
+
     let res_data,
         res_code,
         res_msg;
-    try {
-        let ret = await service.find({
-            account: newAccount.account
-        })
-        if (ret && ret.length > 0) {
-            res_code = 5000;
-            res_msg = "该类别已经存在！"
-        } else {
-            res_code = 1000;
-            res_msg = "新增成功";
-            res_data = await service.createOne(newAccount);
-        }
 
+    try {
+        let ret = await service.createOne(newAccount);
+        res_data = ret.data;
+        res_code = ret.code;
+        res_msg = ret.msg;
     } catch (error) {
         console.log(error)
         res_code = 5000;
