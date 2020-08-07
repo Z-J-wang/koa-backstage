@@ -16,7 +16,7 @@ class Dao {
      * 条件查询
      * @param {object} condObj 查询条件 默认为空对象
      */
-    async find(condObj = {}) {
+    async find() {
         return await model.findOne();
     }
 
