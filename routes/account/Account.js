@@ -10,7 +10,6 @@ router.prefix('/api/account')
  */
 router.get('/getCurrentAccount', async function (ctx, next) {
     const token = ctx.header.authorization;
-
     let res_data,
         res_code,
         res_msg;
@@ -161,9 +160,34 @@ router.post('/login', async function (ctx, next) {
         let ret = await service.login(account);
         res_code = ret.code;
         res_msg = ret.msg;
-        res_data = {
-            token: ret.token
+        res_data = ret.data;
+    } catch (error) {
+        res_code = 5000;
+        console.log(error)
+        res_msg = "后台出错！"
+        res_data = error;
+    } finally {
+        ctx.body = {
+            code: res_code,
+            msg: res_msg,
+            data: res_data,
         }
+    }
+})
+
+/**
+ * 登出
+ */
+router.get('/logout', async function (ctx, next) {
+    const token = ctx.header.authorization
+    let res_data,
+        res_code,
+        res_msg;
+
+    try {
+        let ret = await service.logout(token);
+        res_code = ret.code;
+        res_msg = ret.msg;
     } catch (error) {
         res_code = 5000;
         console.log(error)

@@ -110,6 +110,7 @@ class Service {
         let ret_msg = '';
         let ret_code = 5000;
         let ret_token = '';
+        let loginAccount = '';
         let account = params.account;
         let pwd = params.password;
         let accountInfo = await this._dao.findOne({ account: account });
@@ -121,6 +122,7 @@ class Service {
             ret_token = jwt.createToken(accountInfo.account, accountInfo.auth);
             let ret = await this.updatedToken(accountInfo, ret_token)
             if (ret) {
+                loginAccount = await this.findOne({ token: ret_token})
                 ret_code = 1000;
                 ret_msg = "登录成功！"
             } else {
@@ -132,9 +134,8 @@ class Service {
             ret_msg = "密码错误！"
         }
 
-        return { msg: ret_msg, code: ret_code, token: ret_token };
+        return { msg: ret_msg, code: ret_code, data: loginAccount };
     }
-
 
     /**
      * 将 Token 插入账户信息
@@ -150,6 +151,29 @@ class Service {
         }
 
         return flat;
+    }
+
+    /**
+     * 登出操作
+     * @param {*} token 要登出的 token
+     */
+    async logout(token){
+        const res = {
+            code: 1000,
+            msg: '',
+            data: {}
+        };
+        let ret = await this._dao.updated({ token: null }, { token: token });
+
+        if (ret && ret.length > 0) {
+            res.code = 1000;
+            res.msg = "账户已登出"
+        }else{
+            res.code = 3000
+            res.msg = "账户登出失败"
+        }
+
+        return res;
     }
 }
 
