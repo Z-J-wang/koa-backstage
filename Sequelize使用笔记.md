@@ -387,3 +387,32 @@ await StudentModel.findAndCountAll({
         }]
 ```
 注意：如果查询条件为附属表的属性,则需要有$$包裹属性。如：` where: {"$sort.id$": 1}`
+
+## Sequelize OR 模糊查询
+
+```js
+where: {
+        [Op.or]: [
+            {
+                'name': {
+                    [Op.like]: `%${search}%`
+                }
+            },
+            {
+                "$sort.name$": {
+                    [Op.like]: `%${search}%`
+                }
+            }
+        ]
+    }
+```
+这里的`Op` 需要手动引入
+
+```
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+```
+> 注意：在低版本的`sequelize`(v5 之前) 这里的`[Op.or]` 和 `[Op.like]` 是 `$or` 和 `$like`。
+> 可参考 v4 的文档说明：https://itbilu.com/nodejs/npm/VJIR1CjMb.html#model-attributes
+> 在 v5 为了考虑操作符的安全性，放弃之前操作符的写法。具体说明如下：https://itbilu.com/nodejs/npm/sequelize-docs-v5.html#querying-operators-security
+

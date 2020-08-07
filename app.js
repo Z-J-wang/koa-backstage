@@ -45,15 +45,20 @@ app.use(async (ctx, next) => {
  */
 async function tokenFilter(ctx) {
     // 过滤 OPTIONS 请求
-    if(ctx.method == 'OPTIONS'){
+    if (ctx.method == 'OPTIONS') {
         return false;
     }
     let url = ctx.url;
-    let allowpage = ['/api/account/login'];
+    let allowpage = [
+        '/api/account/login',
+        '/api/bmyx/findBySearch',
+        '/api/bmyx/getProductsByCond',
+        '/api/bmyx/getData'
+    ];
     let token = ctx.header.authorization;
     if (allowpage.indexOf(url) <= -1) {
         if (await tokenFn.isAuthorization(token)) {
-            ctx.body={
+            ctx.body = {
                 code: 401,
                 msg: "token 验证失败",
             }

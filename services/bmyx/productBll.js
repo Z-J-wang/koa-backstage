@@ -5,7 +5,6 @@ class BasicinfoService {
         this._productDao = new productDao();
     }
 
-
     /**
      * 新增一条记录
      * @param {object} newRecord 
@@ -19,6 +18,14 @@ class BasicinfoService {
      */
     async find(params) {
         return await this._productDao.find(params.start, params.pageSize, params.condObj);
+    }
+
+    /**
+     * 搜索模糊查询
+     * @param {*} params 
+     */
+    async findBySearch(params){
+        return await this._productDao.findBySearch(params.start, params.pageSize, params.search);
     }
 
     /**

@@ -83,6 +83,34 @@ router.post('/getProductsByCond', async function (ctx, next) {
 })
 
 /**
+ * 搜索模糊查询
+ */
+router.post('/findBySearch', async function (ctx, next) {
+    const query = ctx.request.body;
+    console.log(query)
+    let res_data,
+        res_code,
+        res_msg;
+
+    try {
+        res_code = 1000;
+        res_msg = "查询成功！";
+        res_data = await productBll.findBySearch(query);
+    } catch (error) {
+        res_code = 5000;
+        console.log(error)
+        res_msg = "后台出错！"
+        res_data = error;
+    } finally {
+        ctx.body = {
+            code: res_code,
+            msg: res_msg,
+            data: res_data,
+        }
+    }
+})
+
+/**
  * 新增一条产品记录
  */
 router.post('/createProduct', async function (ctx, next) {
