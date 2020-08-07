@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sqlConfig = require('./index');
 const moment = require('moment')
-
+moment.locale(); 
 console.log('init sequelize...');
 
 const sequelize = new Sequelize(sqlConfig.DATABASE, sqlConfig.USERNAME, sqlConfig.PASSWORD, {
@@ -65,7 +65,7 @@ function defineModel(name, attributes) {
         allowNull: false,
         get() {
             const createdAt = this.getDataValue('createdAt')
-            return moment(createdAt).format('YYYY-MM-DD');
+            return moment(createdAt).format('YYYY-MM-DD HH:mm:ss');
         }
     };
     attrs.updatedAt = {
@@ -73,7 +73,7 @@ function defineModel(name, attributes) {
         allowNull: false,
         get() {
             const updatedAt = this.getDataValue('updatedAt')
-            return moment(updatedAt).format('YYYY-MM-DD');
+            return moment(updatedAt).format('YYYY-MM-DD HH:mm:ss');
         }
     };
     attrs.version = {
