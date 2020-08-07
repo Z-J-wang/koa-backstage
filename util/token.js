@@ -52,7 +52,23 @@ async function isAuthorization(token){
     return flat;
 }
 
+/**
+ * 判断是否有权限
+ * @param {number} demandAuth 要求权限
+ * @param {string} token 
+ */
+function hasAuth(demandAuth, token){
+    let flat = false;
+    let decoded = verifyToken(token);
+    if (decoded && decoded.auth <= demandAuth){
+        flat = true;
+    }
+    
+    return flat
+}
+
 module.exports = {
+    hasAuth,
     createToken,
     verifyToken,
     isAuthorization

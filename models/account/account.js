@@ -7,9 +7,9 @@ const table = sequelize.defineModel('account', {
     account: {
         type: DataTypes.STRING,
         unique: true
-    }, // 公告内容
-    password: DataTypes.STRING, // 是否滚动
-    auth: DataTypes.BOOLEAN, // 是否滚动
+    }, // 账户
+    password: DataTypes.STRING, // 密码
+    auth: DataTypes.SMALLINT, // 权限 0，1，2
     token:{
         type: DataTypes.STRING,
         allowNull: true

@@ -2,15 +2,7 @@ const model = require('../../model').account;
 
 class Dao {
 
-    constructor() {}
-
-    /**
-     * 新增一条记录
-     * @param {object} newItem
-     */
-    async insert(newItem) {
-        return model.create(newItem)
-    }
+    constructor() { }
 
     /**
      * 条件查询
@@ -23,13 +15,21 @@ class Dao {
     }
 
     /**
-     * 条件查询
+     * 条件查询一条记录
      * @param {object} condObj 查询条件 默认为空对象
      */
     async findOne(condObj = {}) {
         return await model.findOne({
             where: condObj
         });
+    }
+
+    /**
+     * 新增一条记录
+     * @param {object} newItem
+     */
+    async insert(newItem) {
+        return model.create(newItem)
     }
 
     /**
