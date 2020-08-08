@@ -49,7 +49,7 @@ function defineModel(name, attributes) {
         } else {
             attrs[key] = {
                 type: value,
-                allowNull: false
+                // allowNull: false
             };
         }
     }
