@@ -6,6 +6,7 @@ const { decode } = require('jsonwebtoken');
 class Service {
     constructor() {
         this._dao = new Dao();
+        this.createDefaultAccount();
     }
 
     /**
@@ -174,6 +175,23 @@ class Service {
         }
 
         return res;
+    }
+    
+    /**
+     * 创建默认账号
+     */
+    async createDefaultAccount(){
+        let defaultAccount = await this._dao.findOne({account:'admin_bmyx'});
+        if(defaultAccount == null){
+            let  password = encrypt.encryptPwd('bmyx_zhanjiang');
+            let account = {
+                account: 'admin_bmyx',
+                password: password,
+                auth: 0
+            }
+
+            this._dao.insert(account);
+        }
     }
 }
 

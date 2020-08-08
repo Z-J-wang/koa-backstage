@@ -2,7 +2,7 @@
 
 // 数据库配置
 const config = {
-    DATABASE: 'bmyx',
+    DATABASE: 'person_db',
     USERNAME: 'root',
     PASSWORD: '123456',
     PORT: '3306',
