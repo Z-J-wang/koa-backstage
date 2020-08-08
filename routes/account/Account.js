@@ -9,7 +9,7 @@ router.prefix('/api/account')
  * 获取当前账户的信息
  */
 router.get('/getCurrentAccount', async function (ctx, next) {
-    const token = ctx.header.authorization;
+    const query = ctx.request.query;
     let res_data,
         res_code,
         res_msg;
@@ -17,7 +17,7 @@ router.get('/getCurrentAccount', async function (ctx, next) {
     try {
         res_code = 1000;
         res_msg = "查询成功！";
-        res_data = await service.findOne({ token: token});
+        res_data = await service.findOne(query);
     } catch (error) {
         res_code = 5000;
         console.log(error)

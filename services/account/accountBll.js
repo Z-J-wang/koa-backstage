@@ -24,7 +24,7 @@ class Service {
             account: newRecord.account
         })
 
-        if (!jwt.hasAuth(newRecord.auth, token)) {
+        if (!jwt.hasAuth(0, token)) {
             // 判断用户是否由权限创建该权限的账户
             res.code = 5000;
             res.msg = "您的权限不够";
@@ -76,7 +76,7 @@ class Service {
         let ret_code = 5000;
         let ret_data = '';
 
-        if (!jwt.hasAuth(changeObj.auth, token)) {
+        if (!jwt.hasAuth(0, token)) {
             // 判断用户是否由权限创建该权限的账户
             ret_code = 5000;
             ret_msg = "您的权限不够";
