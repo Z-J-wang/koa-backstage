@@ -416,3 +416,5 @@ const Op = Sequelize.Op;
 > 可参考 v4 的文档说明：https://itbilu.com/nodejs/npm/VJIR1CjMb.html#model-attributes
 > 在 v5 为了考虑操作符的安全性，放弃之前操作符的写法。具体说明如下：https://itbilu.com/nodejs/npm/sequelize-docs-v5.html#querying-operators-security
 
+## 查询设置`raw: true`导致 Getters 失效
+这是个大坑。坑了我好久。

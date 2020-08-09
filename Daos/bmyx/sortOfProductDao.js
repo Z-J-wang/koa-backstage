@@ -18,8 +18,6 @@ class Dao {
      */
     async find(condObj = {}) {
         return await model.findAll({
-            raw: true,
-            order: [],
             where: condObj
         });
     }

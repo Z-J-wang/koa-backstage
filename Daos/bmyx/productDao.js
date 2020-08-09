@@ -20,7 +20,6 @@ class ProductDao {
      */
     async find(start, pageSize, condObj) {
         return await product.findAndCountAll({
-            raw: true,
             order: [],
             offset: Number(start) || 0, // 前端分页组件传来的起始偏移量
             limit: Number(pageSize) || 10, // 前端分页组件传来的一页显示多少条
