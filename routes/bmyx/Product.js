@@ -156,8 +156,8 @@ router.post('/updateProduct', async function (ctx, next) {
     try {
         let ret = await productBll.updated(changeData);
         if (ret) {
-            
-            res_data = await productBll.find(0, 10, {id : ret});
+
+            res_data = await productBll.find(0, 10, { id: ret });
             res_code = 1000;
             res_msg = "更新成功"
         } else {
@@ -259,7 +259,7 @@ router.post('/delUploadImage', async function (ctx, next) {
             res_msg = "图片删除成功"
         } else {
             res_code = 5000;
-            res_msg = "图片删除成功";
+            res_msg = "图片删除失败";
         }
     } finally {
         ctx.body = {
@@ -275,16 +275,15 @@ router.post('/delUploadImage', async function (ctx, next) {
  * @param {string} filename 
  */
 function delUploadFile(filename) {
-    fs.unlink(`public\\upload\\${filename}`, function (err) {
-        if (!err) {
-            console.log('删除文件成功');
+    return new Promise((resolve, reject) => {
+        fs.unlink(`public\\upload\\${filename}`, function (err) {
+            if (!err) {
 
-            return true;
-        } else {
-            console.log(err);
-
-            return false;
-        }
+                resolve(true)
+            } else {
+                reject(false)
+            }
+        })
     })
 }
 
