@@ -87,7 +87,6 @@ router.post('/getProductsByCond', async function (ctx, next) {
  */
 router.post('/findBySearch', async function (ctx, next) {
     const query = ctx.request.body;
-    console.log(query)
     let res_data,
         res_code,
         res_msg;
@@ -96,6 +95,35 @@ router.post('/findBySearch', async function (ctx, next) {
         res_code = 1000;
         res_msg = "查询成功！";
         res_data = await productBll.findBySearch(query);
+    } catch (error) {
+        res_code = 5000;
+        console.log(error)
+        res_msg = "后台出错！"
+        res_data = error;
+    } finally {
+        ctx.body = {
+            code: res_code,
+            msg: res_msg,
+            data: res_data,
+        }
+    }
+})
+
+/**
+ * 根据 name 或者 sort 模糊查询
+ */
+router.post('/searchByNameOrSort', async function (ctx, next) {
+    const query = ctx.request.body;
+    let res_data,
+        res_code,
+        res_msg;
+
+    try {
+        res_code = 1000;
+        res_msg = "查询成功！";
+        res_data = await productBll.searchByNameOrSort(query);
+        console.log('res_data+++++++++++++++++++++++++++++++++++++++++')
+        console.log(res_data)
     } catch (error) {
         res_code = 5000;
         console.log(error)
