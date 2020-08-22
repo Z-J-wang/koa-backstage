@@ -418,3 +418,5 @@ const Op = Sequelize.Op;
 
 ## 查询设置`raw: true`导致 Getters 失效
 这是个大坑。坑了我好久。
+
+## 查询设置`raw: true`,导致连表查询的附属表字段格式化为字符串
