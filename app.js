@@ -53,7 +53,9 @@ async function tokenFilter(ctx) {
         '/api/account/login',
         '/api/bmyx/findBySearch',
         '/api/bmyx/getProductsByCond',
-        '/api/bmyx/getData'
+        '/api/bmyx/getData',
+        '/api/bmyx/getSort',
+        '/api/bmyx/getNotice'
     ];
     let token = ctx.header.authorization;
     if (allowpage.indexOf(url) <= -1) {

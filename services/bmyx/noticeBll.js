@@ -18,7 +18,6 @@ class Service {
      */
     async find() {
         const data = await this._dao.find();
-        console.log(data)
         if (data === null){
             await this.createOne();
         }
