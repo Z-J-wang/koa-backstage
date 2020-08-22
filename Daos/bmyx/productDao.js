@@ -38,7 +38,6 @@ class ProductDao {
      */
     async findBySearch(start, pageSize, search) {
         return await product.findAndCountAll({
-            raw: true,
             order: [],
             offset: Number(start) || 0, // 前端分页组件传来的起始偏移量
             limit: Number(pageSize) || 10, // 前端分页组件传来的一页显示多少条
@@ -52,6 +51,40 @@ class ProductDao {
                     {
                         "$sort.name$": {
                             [Op.like]: `%${search}%`
+                        }
+                    }
+                ]
+            } || {},
+            include: [{
+                model: sortofproduct,
+                as: "sort",
+                attributes: ['name'],  // 查询 sortofproduct 表的name字段
+            }]
+        });
+    }
+
+    /**
+     * 根据 name 或者 sort 模糊查询
+     * @param {number} start 
+     * @param {number} pageSize 
+     * @param {string} searchName 
+     * @param {string} searchSort 
+     */
+    async searchByNameOrSort(start, pageSize, searchName, searchSort) {
+        return await product.findAndCountAll({
+            order: [],
+            offset: Number(start) || 0, // 前端分页组件传来的起始偏移量
+            limit: Number(pageSize) || 10, // 前端分页组件传来的一页显示多少条
+            where: {
+                [Op.and]: [
+                    {
+                        'name': {
+                            [Op.like]: `%${searchName}%`
+                        }
+                    },
+                    {
+                        "$sort.name$": {
+                            [Op.like]: `%${searchSort}%`
                         }
                     }
                 ]
