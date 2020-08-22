@@ -58,7 +58,7 @@ async function tokenFilter(ctx) {
         '/api/bmyx/getNotice'
     ];
     let token = ctx.header.authorization;
-    if (allowpage.indexOf(url) <= -1) {
+    if (allowpage.indexOf(url.split('?')[0]) <= -1) {
         if (await tokenFn.isAuthorization(token)) {
             ctx.body = {
                 code: 401,
