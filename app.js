@@ -13,6 +13,7 @@ const person = require('./routes/person')
 const bmyx_product = require('./routes/bmyx/Product')
 const bmyx_sortOfProduct = require('./routes/bmyx/SortOfProduct')
 const bmyx_Notice = require('./routes/bmyx/Notice')
+const wx_user = require('./routes/bmyx/wx_user')
 const account = require('./routes/account/Account')
 const tokenFn = require('./util/token')
 
@@ -55,10 +56,11 @@ async function tokenFilter(ctx) {
         '/api/bmyx/getProductsByCond',
         '/api/bmyx/getData',
         '/api/bmyx/getSort',
-        '/api/bmyx/getNotice'
+        '/api/bmyx/getNotice',
+        '/api/bmyx/wx_login'
     ];
     let token = ctx.header.authorization;
-    if (allowpage.indexOf(url.split('?')[0]) <= -1) {
+    if (url.split('/')[1] === 'api' && allowpage.indexOf(url.split('?')[0]) <= -1) {
         if (await tokenFn.isAuthorization(token)) {
             ctx.body = {
                 code: 401,
@@ -93,6 +95,7 @@ app.use(account.routes(), account.allowedMethods())
 app.use(bmyx_product.routes(), bmyx_product.allowedMethods())
 app.use(bmyx_Notice.routes(), bmyx_Notice.allowedMethods())
 app.use(bmyx_sortOfProduct.routes(), bmyx_sortOfProduct.allowedMethods())
+app.use(wx_user.routes(), wx_user.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
