@@ -46,7 +46,7 @@ class BasicinfoService {
     }
 
     /**
-     * 更新 basicinfo 新增
+     * 更新 basicinfo 
      * @param {object} changeObj 修改的值
      */
     async updated(changeObj) {
@@ -55,6 +55,21 @@ class BasicinfoService {
         }
 
         return await this._productDao.updated(changeObj, cond);
+    }
+
+
+    /**
+     * 商品上下架
+     * @param {object} changeObj 修改的值
+     */
+    async changeProductBan(changeObj) {
+        const cond = {
+            id: changeObj.id
+        }
+        const banStaue = {
+            ban: changeObj.ban
+        }
+        return await this._productDao.updated(banStaue, cond);
     }
 
     /**

@@ -206,6 +206,38 @@ router.post('/updateProduct', async function (ctx, next) {
 })
 
 /**
+ * 商品上下架
+ */
+router.post('/changeProductBan', async function (ctx, next) {
+    const params = ctx.request.body
+    let res_data,
+        res_code,
+        res_msg;
+    try {
+        let ret = await productBll.changeProductBan(params);
+        if (ret) {
+
+            res_data = await productBll.find(0, 10, { id: ret });
+            res_code = 1000;
+            res_msg = "更新成功"
+        } else {
+            res_code = 5000;
+            res_msg = "更新失败";
+        }
+    } catch (error) {
+        console.log(error)
+        ctx.body = "数据库出错";
+    } finally {
+        ctx.body = {
+            code: res_code,
+            msg: res_msg,
+            data: res_data,
+        }
+    }
+
+})
+
+/**
  * 删除一条产品数据
  */
 router.post('/delProduct', async function (ctx, next) {

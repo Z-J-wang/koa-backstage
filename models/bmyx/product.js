@@ -25,7 +25,11 @@ const product = sequelize.defineModel('product', {
             this.setDataValue('imgSrcList', val.join(';'))
         }
     }, // 图片列表
-    detail: Sequelize.STRING // 介绍
+    detail: Sequelize.STRING, // 介绍
+    ban: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+    }
 })
 
 product.belongsTo(sortofproduct, {
@@ -35,7 +39,7 @@ product.belongsTo(sortofproduct, {
 });
 
 product.sync({
-    alert: true
+    force: true
 });
 
 module.exports = product;
