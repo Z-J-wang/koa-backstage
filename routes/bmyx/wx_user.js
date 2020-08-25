@@ -3,7 +3,7 @@ const wx = require('../../util/wx')
 router.prefix('/api/bmyx')
 
 /**
- * 获取产品数据
+ * 微信小程序登录验证
  */
 router.get('/wx_login', async function (ctx, next) {
     let res_data,
@@ -12,9 +12,16 @@ router.get('/wx_login', async function (ctx, next) {
 
     let code = ctx.request.query.code;
     try {
-        res_code = 1000;
-        res_msg = "查询成功！";
-        res_data = await wx.getOpenID(code);
+        let ret = await wx.getOpenID(code);
+        if (ret.openid){
+            res_code = 1000;
+            res_msg = "登录成功";
+        }else{
+            res_code = 5000;
+            res_msg = "登录失败";
+            res_data = ret;
+        }
+       
     } catch (error) {
         res_code = 5000;
         console.log(error)

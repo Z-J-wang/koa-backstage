@@ -1,5 +1,9 @@
 const http = require('https')
 
+/**
+ * 获取微信的 OpenID
+ * @param {string} js_code 小程序登录后获得的 code
+ */
 function getOpenID(js_code) {
     let appid = 'wx25fd9a63915fd479',
         secret = '14956292a0cf9d71b1eb7e8463514a96',
