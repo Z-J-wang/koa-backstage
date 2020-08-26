@@ -39,7 +39,7 @@ product.belongsTo(sortofproduct, {
 });
 
 product.sync({
-    force: true
+    alert: true
 });
 
 module.exports = product;

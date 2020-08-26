@@ -29,7 +29,8 @@ router.get('/getData', async function (ctx, next) {
     const query = ctx.request.query;
     const params = {
         start: query.start,
-        pageSize: query.pageSize
+        pageSize: query.pageSize,
+        condObj: query.condObj ? JSON.parse(query.condObj) : {}
     }
 
     let res_data,
@@ -122,8 +123,6 @@ router.post('/searchByNameOrSort', async function (ctx, next) {
         res_code = 1000;
         res_msg = "查询成功！";
         res_data = await productBll.searchByNameOrSort(query);
-        console.log('res_data+++++++++++++++++++++++++++++++++++++++++')
-        console.log(res_data)
     } catch (error) {
         res_code = 5000;
         console.log(error)
