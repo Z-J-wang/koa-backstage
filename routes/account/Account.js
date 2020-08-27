@@ -155,22 +155,28 @@ router.post('/login', async function (ctx, next) {
     let res_data,
         res_code,
         res_msg;
-
-    try {
-        let ret = await service.login(account);
-        res_code = ret.code;
-        res_msg = ret.msg;
-        res_data = ret.data;
-    } catch (error) {
-        res_code = 5000;
-        console.log(error)
-        res_msg = "后台出错！"
-        res_data = error;
-    } finally {
+    if (ctx.session.captcha !== account.verifiyCode){
         ctx.body = {
-            code: res_code,
-            msg: res_msg,
-            data: res_data,
+            code: 5000,
+            msg: '验证码错误'
+        }
+    }else {
+        try {
+            let ret = await service.login(account);
+            res_code = ret.code;
+            res_msg = ret.msg;
+            res_data = ret.data;
+        } catch (error) {
+            res_code = 5000;
+            console.log(error)
+            res_msg = "后台出错！"
+            res_data = error;
+        } finally {
+            ctx.body = {
+                code: res_code,
+                msg: res_msg,
+                data: res_data,
+            }
         }
     }
 })

@@ -6,6 +6,8 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const cors = require('koa2-cors')
+const tokenFn = require('./util/token')
+const session = require('koa-session');
 
 const index = require('./routes/index')
 const users = require('./routes/users')
@@ -15,7 +17,12 @@ const bmyx_sortOfProduct = require('./routes/bmyx/SortOfProduct')
 const bmyx_Notice = require('./routes/bmyx/Notice')
 const wx_user = require('./routes/bmyx/wx_user')
 const account = require('./routes/account/Account')
-const tokenFn = require('./util/token')
+const verificationCode = require('./routes/verification-code')
+
+app.keys = ['some secret hurr'];   /*cookie的签名*/
+
+//配置session的中间件
+app.use(session({ maxAge: 10000 }, app));  // maxAge--cookie的过期时间
 
 // error handler
 onerror(app)
@@ -57,7 +64,8 @@ async function tokenFilter(ctx) {
         '/api/bmyx/getData',
         '/api/bmyx/getSort',
         '/api/bmyx/getNotice',
-        '/api/bmyx/wx_login'
+        '/api/bmyx/wx_login',
+        "/api/verification-code/getCode"
     ];
     let token = ctx.header.authorization;
     if (url.split('/')[1] === 'api' && allowpage.indexOf(url.split('?')[0]) <= -1) {
@@ -96,6 +104,7 @@ app.use(bmyx_product.routes(), bmyx_product.allowedMethods())
 app.use(bmyx_Notice.routes(), bmyx_Notice.allowedMethods())
 app.use(bmyx_sortOfProduct.routes(), bmyx_sortOfProduct.allowedMethods())
 app.use(wx_user.routes(), wx_user.allowedMethods())
+app.use(verificationCode.routes(), verificationCode.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
