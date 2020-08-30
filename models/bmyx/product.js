@@ -10,6 +10,7 @@ const product = sequelize.defineModel('product', {
     }, // 产品名字
     nowPrice: Sequelize.DECIMAL(10, 2), // 今天价格
     oldPrice: Sequelize.DECIMAL(10, 2), // 昨天价格
+    videoSrc: Sequelize.STRING,
     imgSrcList: {
         type: Sequelize.STRING,
         allowNull: true,
