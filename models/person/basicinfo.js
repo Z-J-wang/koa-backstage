@@ -11,7 +11,8 @@ const basicinfo = sequelize.defineModel('basicinfo', {
     placeOfBirth: DataTypes.STRING,
     nationality: DataTypes.STRING,
     presentAddress: DataTypes.STRING,
-    introducts: DataTypes.STRING
+    introducts: DataTypes.STRING,
+    avatar: DataTypes.STRING
 })
 
 basicinfo.sync();

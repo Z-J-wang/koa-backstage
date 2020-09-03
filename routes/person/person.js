@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const basicInfoBll = require('../service').basicInfoBll
+const basicInfoBll = require('../../service').basicInfoBll
 
 
 const basicinfon = new basicInfoBll();
