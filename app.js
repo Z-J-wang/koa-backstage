@@ -11,7 +11,7 @@ const session = require('koa-session');
 
 const index = require('./routes/index')
 const users = require('./routes/users')
-const person = require('./routes/person')
+const person = require('./routes/person/person')
 const bmyx_product = require('./routes/bmyx/Product')
 const bmyx_sortOfProduct = require('./routes/bmyx/SortOfProduct')
 const bmyx_Notice = require('./routes/bmyx/Notice')
