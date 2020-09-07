@@ -12,6 +12,7 @@ const session = require('koa-session');
 const index = require('./routes/index')
 const users = require('./routes/users')
 const person = require('./routes/person/person')
+const experience = require('./routes/person/experience')
 const bmyx_product = require('./routes/bmyx/Product')
 const bmyx_sortOfProduct = require('./routes/bmyx/SortOfProduct')
 const bmyx_Notice = require('./routes/bmyx/Notice')
@@ -98,13 +99,20 @@ app.use(
 // routes 路由配置
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
-app.use(person.routes(), person.allowedMethods())
+
+// 共同部分
 app.use(account.routes(), account.allowedMethods())
+app.use(verificationCode.routes(), verificationCode.allowedMethods())
+
+// 个人网址部分
+app.use(person.routes(), person.allowedMethods())
+app.use(experience.routes(), experience.allowedMethods())
+
+// BMYX 部分
 app.use(bmyx_product.routes(), bmyx_product.allowedMethods())
 app.use(bmyx_Notice.routes(), bmyx_Notice.allowedMethods())
 app.use(bmyx_sortOfProduct.routes(), bmyx_sortOfProduct.allowedMethods())
 app.use(wx_user.routes(), wx_user.allowedMethods())
-app.use(verificationCode.routes(), verificationCode.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
