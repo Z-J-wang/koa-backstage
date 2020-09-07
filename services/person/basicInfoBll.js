@@ -1,4 +1,4 @@
-const basicinfoDao = require('../dao').basicinfoDao;
+const basicinfoDao = require('../../dao').basicinfoDao;
 
 class BasicinfoService {
     constructor() {

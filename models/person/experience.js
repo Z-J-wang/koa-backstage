@@ -2,18 +2,27 @@ const {DataTypes} = require('sequelize')
 const sequelize = require('../../sqlConfig/dbConn');
 
 const experience = sequelize.defineModel('experience', {
-    name: DataTypes.STRING,
-    gender: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true
+    theme: DataTypes.STRING,
+    dateTime: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        get() {
+            let data = this.getDataValue('dateTime');
+            let list = [];
+            if (data) {
+                list = data.split('至');
+            }
+            return list;
+        },
+        set(val) {
+            this.setDataValue('dateTime', val.join('至'))
+        }
     },
-    birthday: DataTypes.DATEONLY,
-    placeOfBirth: DataTypes.STRING,
-    nationality: DataTypes.STRING,
-    presentAddress: DataTypes.STRING,
-    introducts: DataTypes.STRING
+    detail: DataTypes.STRING
 })
 
-experience.sync();
+experience.sync({
+    alert: true
+});
 
 module.exports = experience;

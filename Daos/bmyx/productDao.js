@@ -112,9 +112,9 @@ class ProductDao {
     }
 
     /**
- * 删除
- * @param {object} id 
- */
+     * 删除
+     * @param {object} id 
+     */
     async delete(id) {
         return await product.destroy({ where: id });
     }
