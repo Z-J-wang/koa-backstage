@@ -54,7 +54,7 @@ router.post('/createExperience', async function (ctx, next) {
         ctx.body = "数据库出错";
     } finally {
         ctx.body = {
-            code: res.ode,
+            code: res.code,
             msg: res.msg,
             data: res.data
         }
@@ -68,7 +68,7 @@ router.post('/updateExperience', async function (ctx, next) {
     const changedObj = ctx.request.body
     const res = {};                     // response 数据对象
     try {
-        let ret = await productBll.updated(changedObj);
+        let ret = await experienceBll.updated(changedObj);
         if (ret) {
 
             res.data = await experienceBll.find(0, 10, { id: ret });
@@ -97,7 +97,7 @@ router.post('/deleteExperience', async function (ctx, next) {
     const params = ctx.request.body
     const res = {};                     // response 数据对象
     try {
-        let ret = await productBll.updated(params.id);
+        let ret = await experienceBll.delete(params);
         if (ret) {
             res.code = 1000;
             res.msg = "删除成功"
