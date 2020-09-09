@@ -19,7 +19,7 @@ const blog = sequelize.defineModel('blog', {
 })
 
 blog.sync({
-    force: true
+    alert: true
 });
 
 module.exports = blog;

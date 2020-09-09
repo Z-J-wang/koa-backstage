@@ -14,6 +14,7 @@ const users = require('./routes/users')
 const person = require('./routes/person/person')
 const experience = require('./routes/person/experience')
 const blog = require('./routes/person/blog')
+const message = require('./routes/person/message')
 const bmyx_product = require('./routes/bmyx/Product')
 const bmyx_sortOfProduct = require('./routes/bmyx/SortOfProduct')
 const bmyx_Notice = require('./routes/bmyx/Notice')
@@ -108,6 +109,7 @@ app.use(verificationCode.routes(), verificationCode.allowedMethods())
 // 个人网址部分
 app.use(blog.routes(), blog.allowedMethods())
 app.use(person.routes(), person.allowedMethods())
+app.use(message.routes(), message.allowedMethods())
 app.use(experience.routes(), experience.allowedMethods())
 
 // BMYX 部分
