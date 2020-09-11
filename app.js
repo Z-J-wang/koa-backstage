@@ -8,7 +8,11 @@ const logger = require('koa-logger')
 const cors = require('koa2-cors')
 const tokenFn = require('./util/token')
 const session = require('koa-session');
+const sessionConfig = require('./config/session.config')
+const secret = require('./config/secret')
+const { logger_koa4, accessLogger } = require('./config/logger');
 
+// route 引入部分 start ---------------------------------------------------
 const index = require('./routes/index')
 const users = require('./routes/users')
 const person = require('./routes/person/person')
@@ -21,11 +25,12 @@ const bmyx_Notice = require('./routes/bmyx/Notice')
 const wx_user = require('./routes/bmyx/wx_user')
 const account = require('./routes/account/Account')
 const verificationCode = require('./routes/verification-code')
+// route 引入部分 end ---------------------------------------------------
 
-app.keys = ['some secret hurr'];   /*cookie的签名*/
+app.keys = [secret];   /*cookie的签名*/
 
 //配置session的中间件
-app.use(session({ maxAge: 10000 }, app));  // maxAge--cookie的过期时间
+app.use(session(sessionConfig, app));  // maxAge--cookie的过期时间
 
 // error handler
 onerror(app)
@@ -36,6 +41,7 @@ app.use(bodyparser({
 }))
 app.use(json())
 app.use(logger())
+app.use(accessLogger());
 app.use(require('koa-static')(__dirname + '/public'))
 
 app.use(views(__dirname + '/views', {
@@ -46,7 +52,7 @@ app.use(views(__dirname + '/views', {
 app.use(async (ctx, next) => {
     const start = new Date()
     await next();
-    tokenFilter(ctx)
+    tokenFilter(ctx);   // token 验证
     const ms = new Date() - start
     console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
@@ -120,9 +126,8 @@ app.use(bmyx_sortOfProduct.routes(), bmyx_sortOfProduct.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
+    logger_koa4.error(err);
     console.error('server error', err, ctx)
 });
-
-
 
 module.exports = app
