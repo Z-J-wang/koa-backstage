@@ -10,9 +10,10 @@ router.get('/getCode', async (ctx) => {
         fontSize: 50,   //字体大小
         width: 100,
         height: 40,
-        noise: 2,
-        ignoreChars: '0o1i'
-        // background: '#cc8801'
+        noise: 2,   // 干扰线条的数量
+        ignoreChars: '0oO1ilI', // 验证码字符中排除 0o1i
+        color: true,    //  验证码的字符是否有颜色，默认没有，如果设定了背景，则默认有
+        // background: '#eee'
     });
     ctx.session.captcha = captcha.text.toLowerCase();
     ctx.response.type = 'image/svg+xml';

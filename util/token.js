@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const secret = require('./secret');
+const secret = require('../config/secret');
 const AccountDao = require('../dao').accountDao;
 
 const Dao = new AccountDao();
