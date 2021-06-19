@@ -5,7 +5,7 @@ const ArticleBll = require('../../service').articleBll
 const articleService = new ArticleBll();
 
 
-router.prefix('/api/person')
+router.prefix('/api/article')
 
 /**
  * 查询
