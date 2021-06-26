@@ -8,7 +8,7 @@ const table = sequelize.defineModel('article', {
     unique: true,
   }, // 标题
   introduction: DataTypes.STRING(500), // 简介
-  category_id: DataTypes.INTEGER, // 分类ID
+  category: DataTypes.INTEGER, // 分类
   tags: DataTypes.STRING, // 标签数组
   content: DataTypes.STRING, // 内容
 });
