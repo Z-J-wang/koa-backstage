@@ -1,15 +1,14 @@
 const Dao = require('../../util/dao').articleDao;
 const BaseService = require('../util/baseBll');
-const TagsBll = require('./tagsBll')
-
+const TagsBll = require('./tagsBll');
+const CategoriesBll = require('./categoriesBll');
 
 class articleService extends BaseService {
   constructor() {
     super(Dao);
     this._dao = new Dao();
-    this._tagsService = new TagsBll();
-    // this._tagsService.createNewObj({name: 'Js'})
-    this._tagsService.isExist();
+    this._tagsBll = new TagsBll();
+    this._categoriesBll = new CategoriesBll();
   }
 
   /**
@@ -17,6 +16,8 @@ class articleService extends BaseService {
    * @param {object} newValue
    */
   async createNewObj(newObj) {
+    this._tagsBll.isExist(newObj.tags);
+    this._categoriesBll.isExist(newObj.category);
     return await this._dao.insert(newObj);
   }
 
@@ -33,6 +34,8 @@ class articleService extends BaseService {
       const cond = {
         id: info.id,
       };
+      this._tagsBll.isExist(changeObj.tags);
+      this._categoriesBll.isExist(changeObj.category);
       return await this._dao.updated(changeObj, cond);
     } catch (error) {
       console.log(error);
