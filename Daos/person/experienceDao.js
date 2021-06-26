@@ -1,4 +1,4 @@
-const experience = require('../../model').experience;
+const experience = require('../../util/model').experience;
 
 class ExperienceDao {
 

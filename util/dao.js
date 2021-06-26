@@ -1,7 +1,7 @@
 const path = require('path')
-const { readFileList } = require('./public/js/common');
-
-let files = readFileList(__dirname + '/Daos');
+const { readFileList } = require('./common');
+console.log(__dirname)
+let files = readFileList(__dirname + '../../Daos');
 
 let js_files = files.filter((f)=>{
     return f.endsWith('.js');

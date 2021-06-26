@@ -3,15 +3,18 @@ const sequelize = require('../../sqlConfig/dbConn');
 
 // 文章
 const table = sequelize.defineModel('article', {
-	title: {
-		type: DataTypes.STRING,
-		unique: true
-	}, // 标题
-	content: DataTypes.STRING // 内容
+  title: {
+    type: DataTypes.STRING,
+    unique: true,
+  }, // 标题
+  introduction: DataTypes.STRING(500), // 简介
+  category_id: DataTypes.INTEGER, // 分类ID
+  tags: DataTypes.STRING, // 标签数组
+  content: DataTypes.STRING, // 内容
 });
 
 table.sync({
-	alert: true
+  alert: true,
 });
 
 module.exports = table;

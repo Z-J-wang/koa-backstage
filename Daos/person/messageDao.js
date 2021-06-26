@@ -1,4 +1,4 @@
-const model = require('../../model').message;
+const model = require('../../util/model').message;
 
 class messageDao {
 

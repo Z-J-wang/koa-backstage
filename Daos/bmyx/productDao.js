@@ -1,5 +1,5 @@
-const product = require('../../model').product;
-const sortofproduct = require('../../model').sortofproduct;
+const product = require('../../util/model').product;
+const sortofproduct = require('../../util/model').sortofproduct;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 class ProductDao {

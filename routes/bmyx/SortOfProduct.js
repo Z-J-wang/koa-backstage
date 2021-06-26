@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const SortOfProductBll = require('../../service').sortOfProductBll
+const SortOfProductBll = require('../../util/service').sortOfProductBll
 
 
 const service = new SortOfProductBll();

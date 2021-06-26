@@ -1,4 +1,4 @@
-const model = require('../../util/model').article;
+const model = require('../../util/model').tags;
 const BaseDao = require('../util/baseDao');
 
 class Dao extends BaseDao {

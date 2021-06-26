@@ -1,4 +1,4 @@
-const dao = require('../../dao').articleDao;
+const dao = require('../../util/dao').articleDao;
 
 class articleService {
 	constructor() {

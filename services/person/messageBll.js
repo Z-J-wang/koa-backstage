@@ -1,4 +1,4 @@
-const dao = require('../../dao').messageDao;
+const dao = require('../../util/dao').messageDao;
 
 class messageService {
     constructor() {

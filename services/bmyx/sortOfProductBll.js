@@ -1,4 +1,4 @@
-const Dao = require('../../dao').sortOfProductDao;
+const Dao = require('../../util/dao').sortOfProductDao;
 
 class Service {
     constructor() {

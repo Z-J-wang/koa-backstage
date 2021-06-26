@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const AccountBll = require('../../service').accountBll
+const AccountBll = require('../../util/service').accountBll
 
 const service = new AccountBll();
 

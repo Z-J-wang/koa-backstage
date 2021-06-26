@@ -1,4 +1,4 @@
-const Dao = require('../../dao').accountDao;
+const Dao = require('../../util/dao').accountDao;
 const jwt = require('../../util/token');
 const encrypt = require('../../util/encrypt');
 const { decode } = require('jsonwebtoken');

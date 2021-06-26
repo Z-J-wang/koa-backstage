@@ -1,7 +1,7 @@
 const fs = require('fs')
 const multer = require('koa-multer');
 const router = require('koa-router')()
-const ProductBll = require('../../service').productBll
+const ProductBll = require('../../util/service').productBll
 
 //以下是配置
 var storage = multer.diskStorage({

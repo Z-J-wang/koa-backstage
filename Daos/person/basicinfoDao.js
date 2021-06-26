@@ -1,4 +1,4 @@
-const basicinfo = require('../../model').basicinfo;
+const basicinfo = require('../../util/model').basicinfo;
 
 class BasicinfoDao {
 

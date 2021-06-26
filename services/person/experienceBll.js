@@ -1,4 +1,4 @@
-const experienceDao = require('../../dao').experienceDao;
+const experienceDao = require('../../util/dao').experienceDao;
 
 class ExperienceService {
     constructor() {

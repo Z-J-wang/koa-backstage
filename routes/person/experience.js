@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const ExperienceBll = require('../../service').experienceBll
+const ExperienceBll = require('../../util/service').experienceBll
 
 
 const experienceBll = new ExperienceBll();

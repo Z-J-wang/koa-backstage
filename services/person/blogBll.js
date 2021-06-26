@@ -1,4 +1,4 @@
-const dao = require('../../dao').blogDao;
+const dao = require('../../util/dao').blogDao;
 
 class blogService {
     constructor() {

@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const NoticeBll = require('../../service').noticeBll
+const NoticeBll = require('../../util/service').noticeBll
 
 
 const service = new NoticeBll();

@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const ArticleBll = require('../../service').articleBll
+const ArticleBll = require('../../util/service').articleBll
 
 
 const articleService = new ArticleBll();

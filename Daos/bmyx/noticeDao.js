@@ -1,4 +1,4 @@
-const model = require('../../model').notice;
+const model = require('../../util/model').notice;
 
 class Dao {
 

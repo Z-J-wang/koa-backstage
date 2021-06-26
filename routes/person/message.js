@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const MessageBll = require('../../service').messageBll
+const MessageBll = require('../../util/service').messageBll
 
 
 const message_service = new MessageBll();

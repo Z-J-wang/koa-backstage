@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const BlogBll = require('../../service').blogBll
+const BlogBll = require('../../util/service').blogBll
 
 
 const blog_service = new BlogBll();

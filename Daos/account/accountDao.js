@@ -1,4 +1,4 @@
-const model = require('../../model').account;
+const model = require('../../util/model').account;
 
 class Dao {
 

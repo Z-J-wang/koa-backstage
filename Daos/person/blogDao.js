@@ -1,4 +1,4 @@
-const model = require('../../model').blog;
+const model = require('../../util/model').blog;
 
 class blogDao {
 
