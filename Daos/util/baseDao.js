@@ -25,7 +25,7 @@ class BaseDao {
    * @returns
    */
   async findByPage(startSeq = 0, pageSize = 10, condObj = {}) {
-    return await model.findAndCountAll({
+    return await this._model.findAndCountAll({
       order: [],
       offset: Number(startSeq), // 前端分页组件传来的起始偏移量
       limit: Number(pageSize), // 前端分页组件传来的一页显示多少条
