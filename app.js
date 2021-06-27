@@ -26,6 +26,8 @@ const wx_user = require('./routes/bmyx/wx_user');
 const account = require('./routes/account/Account');
 const verificationCode = require('./routes/verification-code');
 const article = require('./routes/article/article');
+const categories = require('./routes/article/categories');
+const tags = require('./routes/article/tags');
 // route 引入部分 end ---------------------------------------------------
 
 app.keys = [secret]; /*cookie的签名*/
@@ -140,6 +142,8 @@ app.use(bmyx_sortOfProduct.routes(), bmyx_sortOfProduct.allowedMethods());
 
 // 文章
 app.use(article.routes(), article.allowedMethods());
+app.use(tags.routes(), tags.allowedMethods());
+app.use(categories.routes(), categories.allowedMethods());
 
 // error-handling
 app.on('error', (err, ctx) => {
