@@ -16,8 +16,9 @@ class articleService extends BaseService {
    * @param {object} newValue
    */
   async createNewObj(newObj) {
+    newObj.tags = newObj.tags.join('-');
     this._tagsBll.isExist(newObj.tags);
-    this._categoriesBll.isExist(newObj.category);
+    this._categoriesBll.isExist(newObj.s);
     return await this._dao.insert(newObj);
   }
 
@@ -34,6 +35,7 @@ class articleService extends BaseService {
       const cond = {
         id: info.id,
       };
+      changeObj.tags = changeObj.tags.join('-');
       this._tagsBll.isExist(changeObj.tags);
       this._categoriesBll.isExist(changeObj.category);
       return await this._dao.updated(changeObj, cond);

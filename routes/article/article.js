@@ -75,8 +75,8 @@ router.post('/createArticle', async function (ctx, next) {
       res.msg = '添加失败';
     }
   } catch (error) {
-    console.log(error);
-    ctx.body = '数据库出错';
+    res.code = 5000;
+    res.msg = error;
   } finally {
     ctx.body = {
       code: res.code,
