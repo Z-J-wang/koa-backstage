@@ -15,24 +15,6 @@ class BaseService {
   }
 
   /**
-   * 条件分页查询
-   * @param {object} query // 查询条件
-   * @returns
-   */
-  async findByPage(query) {
-    const params = {
-      start: query.start,
-      pageSize: query.pageSize,
-      condObj: query.condObj ? JSON.parse(query.condObj) : {},
-    };
-    return await this._dao.findByPage(
-      params.start,
-      params.pageSize,
-      params.condObj
-    );
-  }
-
-  /**
    * 新增一条记录
    * @param {object} newValue
    */
