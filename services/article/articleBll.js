@@ -33,7 +33,7 @@ class articleService extends BaseService {
 	async createNewObj(newObj) {
 		newObj.tags = newObj.tags.join('-');
 		this._tagsBll.isExist(newObj.tags);
-		this._categoriesBll.isExist(newObj.s);
+		this._categoriesBll.isExist(newObj.category);
 		return await this._dao.insert(newObj);
 	}
 
