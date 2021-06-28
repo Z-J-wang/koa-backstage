@@ -33,31 +33,59 @@ router.get('/getArticles', async function (ctx, next) {
 });
 
 /**
+ * 查询
+ */
+router.get('/getArticlesByID', async function (ctx, next) {
+  const query = ctx.request.query; // 条件
+  console.log(query.id);
+  const res = {}; // response 数据对象
+  try {
+    res.data = await articleService.findOne({ id: query.id });
+    if (res.data) {
+      res.code = 1000;
+      res.msg = '数据获取成功';
+    } else {
+      res.code = 5000;
+      res.msg = '数据获取失败';
+    }
+  } catch (error) {
+    console.log(error);
+    ctx.body = '数据库出错';
+  } finally {
+    ctx.body = {
+      code: res.code,
+      msg: res.msg,
+      data: res.data,
+    };
+  }
+});
+
+/**
  * 分页查询
  */
- router.get('/getArticlesByPage', async function (ctx, next) {
-    const query = ctx.request.query; // 条件
-    const res = {}; // response 数据对象
-    try {
-      res.data = await articleService.findByPage(query);
-      if (res.data) {
-        res.code = 1000;
-        res.msg = '数据获取成功';
-      } else {
-        res.code = 5000;
-        res.msg = '数据获取失败';
-      }
-    } catch (error) {
-      console.log(error);
-      ctx.body = '数据库出错';
-    } finally {
-      ctx.body = {
-        code: res.code,
-        msg: res.msg,
-        data: res.data,
-      };
+router.get('/getArticlesByPage', async function (ctx, next) {
+  const query = ctx.request.query; // 条件
+  const res = {}; // response 数据对象
+  try {
+    res.data = await articleService.findByPage(query);
+    if (res.data) {
+      res.code = 1000;
+      res.msg = '数据获取成功';
+    } else {
+      res.code = 5000;
+      res.msg = '数据获取失败';
     }
-  });
+  } catch (error) {
+    console.log(error);
+    ctx.body = '数据库出错';
+  } finally {
+    ctx.body = {
+      code: res.code,
+      msg: res.msg,
+      data: res.data,
+    };
+  }
+});
 
 /**
  * 新增

@@ -25,8 +25,8 @@ class BaseService {
   /**
    * 根据 id 查询一条记录
    */
-  async findOne(id) {
-    const info = await this._dao.findOne(id);
+  async findOne(keyObj) {
+    const info = await this._dao.findOne(keyObj);
 
     return info;
   }
