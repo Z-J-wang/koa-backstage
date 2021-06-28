@@ -416,6 +416,9 @@ const Op = Sequelize.Op;
 > 可参考 v4 的文档说明：https://itbilu.com/nodejs/npm/VJIR1CjMb.html#model-attributes
 > 在 v5 为了考虑操作符的安全性，放弃之前操作符的写法。具体说明如下：https://itbilu.com/nodejs/npm/sequelize-docs-v5.html#querying-operators-security
 
+## `raw: true` 作用
+默认情况下,所有 finder 方法的结果都是模型类的实例(与普通的 JavaScript 对象相反). 这意味着在数据库返回结果之后,Sequelize 会自动将所有内容包装在适当的实例对象中. 在少数情况下,当结果太多时,这种包装可能会效率低下. 要禁用此包装并收到简单的响应,请将 { raw: true } 作为参数传递给 finder 方法.
+
 ## 查询设置`raw: true`导致 Getters 失效
 这是个大坑。坑了我好久。
 
