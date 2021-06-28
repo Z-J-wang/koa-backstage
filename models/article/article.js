@@ -10,7 +10,7 @@ const table = sequelize.defineModel('article', {
   introduction: DataTypes.STRING(500), // 简介
   category: DataTypes.STRING(50), // 分类
   tags: DataTypes.STRING(100), // 标签数组
-  content: DataTypes.STRING, // 内容
+  content: DataTypes.TEXT, // 内容
 });
 
 table.sync({
