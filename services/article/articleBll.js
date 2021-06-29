@@ -58,6 +58,26 @@ class articleService extends BaseService {
 			console.log(error);
 		}
 	}
+
+	/**
+	 * 浏览量自增
+	 * @param {number} id
+	 */
+	async pageViewAutoIncre(id) {
+		try {
+			const info = await this.findOne(id);
+			if (!info.id) {
+				return false;
+			}
+			const cond = {
+				id: info.id
+			};
+
+			return await this._dao.updated({ pageViews: ++info.pageViews }, cond);
+		} catch (error) {
+			console.log(error);
+		}
+	}
 }
 
 module.exports = articleService;
