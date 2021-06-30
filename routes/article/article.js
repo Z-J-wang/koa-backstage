@@ -92,17 +92,11 @@ router.get('/getArticlesByPage', async function (ctx, next) {
  */
 router.post('/createArticle', async function (ctx, next) {
 	const newObj = ctx.request.body;
-	const res = {}; // response 数据对象
+	let res = {}; // response 数据对象
 	try {
-		res.data = await articleService.createNewObj(newObj);
-		if (res.data) {
-			res.code = 1000;
-			res.msg = '添加成功';
-		} else {
-			res.code = 5000;
-			res.msg = '添加失败';
-		}
+    res = await articleService.createNewObj(newObj);
 	} catch (error) {
+    console.log(error);
 		res.code = 5000;
 		res.msg = error;
 	} finally {
@@ -119,17 +113,9 @@ router.post('/createArticle', async function (ctx, next) {
  */
 router.post('/updateArticle', async function (ctx, next) {
 	const changedObj = ctx.request.body;
-	const res = {}; // response 数据对象
+	let res = {}; // response 数据对象
 	try {
-		let ret = await articleService.updated(changedObj);
-		if (ret) {
-			res.data = await articleService.findOne({ id: ret });
-			res.code = 1000;
-			res.msg = '更新成功';
-		} else {
-			res.code = 5000;
-			res.msg = '更新失败';
-		}
+		res = await articleService.updated(changedObj);
 	} catch (error) {
 		console.log(error);
 		ctx.body = '数据库出错';

@@ -31,10 +31,14 @@ class articleService extends BaseService {
 	 * @param {object} newValue
 	 */
 	async createNewObj(newObj) {
+		const ret = await this._dao.find({ title: newObj.title });
+		if (ret.length) {
+			return { code: 5000, msg: '文章标题已存在' };
+		}
 		newObj.tags = newObj.tags.join('-');
 		this._tagsBll.isExist(newObj.tags);
 		this._categoriesBll.isExist(newObj.category);
-		return await this._dao.insert(newObj);
+		return { code: 1000, data: await this._dao.insert(newObj) };
 	}
 
 	/**
@@ -43,17 +47,24 @@ class articleService extends BaseService {
 	 */
 	async updated(changeObj) {
 		try {
-			const info = await this.findOne(changeObj.id);
-			if (!info.id) {
-				return false;
+			if (!changeObj.id) {
+				return { code: 5000, msg: '缺少ID' };
 			}
-			const cond = {
-				id: info.id
-			};
+			const ret = await this._dao.findOne({ title: changeObj.title });
+			if (ret.id !== changeObj.id) {
+				return { code: 5000, msg: '文章标题已存在' };
+			}
 			changeObj.tags = changeObj.tags.join('-');
 			this._tagsBll.isExist(changeObj.tags);
 			this._categoriesBll.isExist(changeObj.category);
-			return await this._dao.updated(changeObj, cond);
+			const changedData = await this._dao.updated(changeObj, {
+				id: changeObj.id
+			});
+			return {
+				code: 1000,
+				data: await this._dao.findOne({ id: changedData.id }),
+				msg: '更新成功'
+			};
 		} catch (error) {
 			console.log(error);
 		}
@@ -65,7 +76,8 @@ class articleService extends BaseService {
 	 */
 	async pageViewAutoIncre(id) {
 		try {
-			const info = await this.findOne(id);
+			const info = await this.findOne({ id: id });
+			console.log(info);
 			if (!info.id) {
 				return false;
 			}
