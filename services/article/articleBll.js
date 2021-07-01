@@ -62,7 +62,7 @@ class articleService extends BaseService {
 			});
 			return {
 				code: 1000,
-				data: await this._dao.findOne({ id: changedData.id }),
+				data: await this._dao.findOne({ id: changeObj.id }),
 				msg: '更新成功'
 			};
 		} catch (error) {
