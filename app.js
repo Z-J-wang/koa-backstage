@@ -83,7 +83,7 @@ async function tokenFilter(ctx) {
     // 不在 notNeedTokenApi 数组中，需要进行 token 验证
     if (!token || (await tokenFn.isAuthorization(token))) {
       ctx.body = {
-        code: 401,
+        code: 403,
         msg: 'token 验证失败',
       };
     }
