@@ -1,211 +1,218 @@
-const router = require('koa-router')()
-const AccountBll = require('../../util/service').accountBll
+const router = require('koa-router')();
+const AccountBll = require('../../util/service').accountBll;
 
 const service = new AccountBll();
 
-router.prefix('/api/account')
+router.prefix('/api/account');
 
 /**
  * 获取当前账户的信息
  */
 router.get('/getCurrentAccount', async function (ctx, next) {
-    const query = ctx.request.query;
-    let res_data,
-        res_code,
-        res_msg;
+	const query = ctx.request.query;
+	let res_data, res_code, res_msg;
 
-    try {
-        res_code = 1000;
-        res_msg = "查询成功！";
-        res_data = await service.findOne(query);
-    } catch (error) {
-        res_code = 5000;
-        console.log(error)
-        res_msg = "后台出错！"
-        res_data = error;
-    } finally {
-        ctx.body = {
-            code: res_code,
-            msg: res_msg,
-            data: res_data,
-        }
-    }
-})
+	try {
+		res_code = 1000;
+		res_msg = '查询成功！';
+		res_data = await service.findOne(query);
+	} catch (error) {
+		res_code = 5000;
+		console.log(error);
+		res_msg = '后台出错！';
+		res_data = error;
+	} finally {
+		ctx.body = {
+			code: res_code,
+			msg: res_msg,
+			data: res_data
+		};
+	}
+});
 
 /**
  * 条件查询
  */
 router.get('/getAccountByCond', async function (ctx, next) {
-    const query = ctx.request.query;
-    let res_data,
-        res_code,
-        res_msg;
+	const query = ctx.request.query;
+	let res_data, res_code, res_msg;
 
-    try {
-        res_code = 1000;
-        res_msg = "查询成功！";
-        res_data = await service.find(query);
-    } catch (error) {
-        res_code = 5000;
-        console.log(error)
-        res_msg = "后台出错！"
-        res_data = error;
-    } finally {
-        ctx.body = {
-            code: res_code,
-            msg: res_msg,
-            data: res_data,
-        }
-    }
-})
+	try {
+		res_code = 1000;
+		res_msg = '查询成功！';
+		res_data = await service.find(query);
+	} catch (error) {
+		res_code = 5000;
+		console.log(error);
+		res_msg = '后台出错！';
+		res_data = error;
+	} finally {
+		ctx.body = {
+			code: res_code,
+			msg: res_msg,
+			data: res_data
+		};
+	}
+});
 
 /**
  * 新增一个账号
  */
 router.post('/createAccount', async function (ctx, next) {
-    const newAccount = ctx.request.body
-    const token = ctx.header.authorization;
-    
-    let res_data,
-        res_code,
-        res_msg;
+	const newAccount = ctx.request.body;
+	const token = ctx.header.authorization;
 
-    try {
-        let ret = await service.createOne(newAccount, token);
-        res_data = ret.data;
-        res_code = ret.code;
-        res_msg = ret.msg;
-    } catch (error) {
-        console.log(error)
-        res_code = 5000;
-        res_msg = "后台出错！"
-        res_data = error;
-    } finally {
-        ctx.body = {
-            code: res_code,
-            msg: res_msg,
-            data: res_data,
-        }
-    }
-})
+	let res_data, res_code, res_msg;
+
+	try {
+		let ret = await service.createOne(newAccount, token);
+		res_data = ret.data;
+		res_code = ret.code;
+		res_msg = ret.msg;
+	} catch (error) {
+		console.log(error);
+		res_code = 5000;
+		res_msg = '后台出错！';
+		res_data = error;
+	} finally {
+		ctx.body = {
+			code: res_code,
+			msg: res_msg,
+			data: res_data
+		};
+	}
+});
 
 /**
  * 修改账户信息
  */
 router.post('/updateAccount', async function (ctx, next) {
-    const changeData = ctx.request.body;
-    const token = ctx.header.authorization;
+	const changeData = ctx.request.body;
+	const token = ctx.header.authorization;
 
-    let res_data,
-        res_code,
-        res_msg;
-    try {
-        let ret = await service.updated(changeData, token);
-        res_code = ret.code;
-        res_msg = ret.msg;
-        res_data = ret.data;
-    } catch (error) {
-        console.log(error)
-        ctx.body = "数据库出错";
-    } finally {
-        ctx.body = {
-            code: res_code,
-            msg: res_msg,
-            data: res_data,
-        }
-    }
-
-})
+	let res_data, res_code, res_msg;
+	try {
+		let ret = await service.updated(changeData, token);
+		res_code = ret.code;
+		res_msg = ret.msg;
+		res_data = ret.data;
+	} catch (error) {
+		console.log(error);
+		ctx.body = '数据库出错';
+	} finally {
+		ctx.body = {
+			code: res_code,
+			msg: res_msg,
+			data: res_data
+		};
+	}
+});
 
 /**
  * 删除一条产品数据
  */
 router.post('/delAccount', async function (ctx, next) {
-    const cond = ctx.request.body
-    let res_data,
-        res_code,
-        res_msg;
-    try {
-        let ret = await service.delete(cond);
-        if (ret) {
-            res_data = ret;
-            res_code = 1000;
-            res_msg = "删除成功"
-        } else {
-            res_code = 5000;
-            res_msg = "删除失败";
-        }
-    } catch (error) {
-        console.log(error)
-        ctx.body = "数据库出错";
-    } finally {
-        ctx.body = {
-            code: res_code,
-            msg: res_msg,
-            data: res_data,
-        }
-    }
-})
+	const cond = ctx.request.body;
+	let res_data, res_code, res_msg;
+	try {
+		let ret = await service.delete(cond);
+		if (ret) {
+			res_data = ret;
+			res_code = 1000;
+			res_msg = '删除成功';
+		} else {
+			res_code = 5000;
+			res_msg = '删除失败';
+		}
+	} catch (error) {
+		console.log(error);
+		ctx.body = '数据库出错';
+	} finally {
+		ctx.body = {
+			code: res_code,
+			msg: res_msg,
+			data: res_data
+		};
+	}
+});
 
 /**
  * 登陆
  */
 router.post('/login', async function (ctx, next) {
-    const account = ctx.request.body
-    let res_data,
-        res_code,
-        res_msg;
-    if (ctx.session.captcha !== account.verifiyCode){
-        ctx.body = {
-            code: 5000,
-            msg: '验证码错误'
-        }
-    }else {
-        try {
-            let ret = await service.login(account);
-            res_code = ret.code;
-            res_msg = ret.msg;
-            res_data = ret.data;
-        } catch (error) {
-            res_code = 5000;
-            console.log(error)
-            res_msg = "后台出错！"
-            res_data = error;
-        } finally {
-            ctx.body = {
-                code: res_code,
-                msg: res_msg,
-                data: res_data,
-            }
-        }
-    }
-})
+	const account = ctx.request.body;
+	let res_data, res_code, res_msg;
+	if (ctx.session.captcha !== account.verifiyCode) {
+		ctx.body = {
+			code: 5000,
+			msg: '验证码错误'
+		};
+	} else {
+		try {
+			let ret = await service.login(account);
+			res_code = ret.code;
+			res_msg = ret.msg;
+			res_data = ret.data;
+		} catch (error) {
+			res_code = 5000;
+			console.log(error);
+			res_msg = '后台出错！';
+			res_data = error;
+		} finally {
+			ctx.body = {
+				code: res_code,
+				msg: res_msg,
+				data: res_data
+			};
+		}
+	}
+});
 
 /**
  * 登出
  */
 router.get('/logout', async function (ctx, next) {
-    const token = ctx.header.authorization
-    let res_data,
-        res_code,
-        res_msg;
+	const token = ctx.header.authorization;
+	let res_data, res_code, res_msg;
 
-    try {
-        let ret = await service.logout(token);
-        res_code = ret.code;
-        res_msg = ret.msg;
-    } catch (error) {
-        res_code = 5000;
-        console.log(error)
-        res_msg = "后台出错！"
-        res_data = error;
-    } finally {
-        ctx.body = {
-            code: res_code,
-            msg: res_msg,
-            data: res_data,
-        }
-    }
-})
+	try {
+		let ret = await service.logout(token);
+		res_code = ret.code;
+		res_msg = ret.msg;
+	} catch (error) {
+		res_code = 5000;
+		console.log(error);
+		res_msg = '后台出错！';
+		res_data = error;
+	} finally {
+		ctx.body = {
+			code: res_code,
+			msg: res_msg,
+			data: res_data
+		};
+	}
+});
 
-module.exports = router
+/**
+ * 根据token获取用户信息
+ */
+router.get('/getUserinfo', async function (ctx, next) {
+	const token = ctx.header.authorization;
+	let res = {};
+	try {
+		res = await service.getUserinfo(token);
+	} catch (error) {
+		res.code = 5000;
+		console.log(error);
+		res.msg = '后台出错！';
+		res.data = error;
+	} finally {
+		ctx.body = {
+			code: res.code,
+			msg: res.msg,
+			data: res.data
+		};
+	}
+});
+
+module.exports = router;
