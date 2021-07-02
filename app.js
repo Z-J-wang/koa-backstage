@@ -29,6 +29,7 @@ const verificationCode = require('./routes/verification-code');
 const article = require('./routes/article/article');
 const categories = require('./routes/article/categories');
 const tags = require('./routes/article/tags');
+const image = require('./routes/image');
 // route 引入部分 end ---------------------------------------------------
 
 app.keys = [secret]; /*cookie的签名*/
@@ -74,7 +75,7 @@ async function tokenFilter(ctx) {
     return false;
   }
   let url = ctx.url;
-  let token = JSON.parse(ctx.header.authorization);
+  let token = ctx.header.authorization;
 
   if (
     url.split('/')[1] === 'api' &&
@@ -115,6 +116,7 @@ app.use(users.routes(), users.allowedMethods());
 // 共同部分
 app.use(account.routes(), account.allowedMethods());
 app.use(verificationCode.routes(), verificationCode.allowedMethods());
+app.use(image.routes(), image.allowedMethods());
 
 // 个人网址部分
 app.use(blog.routes(), blog.allowedMethods());
