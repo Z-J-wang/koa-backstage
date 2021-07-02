@@ -12,7 +12,6 @@ const sessionConfig = require('./config/session.config');
 const secret = require('./config/secret');
 const { logger_koa4, accessLogger } = require('./config/logger');
 const notNeedTokenApi = require('./config/notNeedTokenApi'); // notNeedTokenApi 数组，罗列不需要进行 token 验证的 api
-
 // route 引入部分 start ---------------------------------------------------
 const index = require('./routes/index');
 const users = require('./routes/users');
