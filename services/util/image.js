@@ -1,17 +1,12 @@
 const Dao = require('../../util/dao').articleDao;
 const BaseService = require('./baseBll');
-
+const clearInvalidImage =require('../../util/common').clearInvalidImage
 class articleService extends BaseService {
 	constructor() {
 		super(Dao);
 		this._dao = new Dao();
-    this._dao.findOne().then((res)=>{
-			
-      console.log(res.content);
-			let reg = /[a-z0-9]*.png/igm
-
-			let ret = reg.exec(res.content)
-			console.log(res.content.match(reg))
+    this._dao.find().then((res)=>{
+			clearInvalidImage(res)
     });
 	}
 

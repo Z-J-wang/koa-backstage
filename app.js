@@ -31,6 +31,9 @@ const tags = require('./routes/article/tags');
 const image = require('./routes/image');
 // route 引入部分 end ---------------------------------------------------
 
+const clearInvalidImage = require('./util/clearInvalidImage');
+console.log(clearInvalidImage)
+clearInvalidImage();
 app.keys = [secret]; /*cookie的签名*/
 
 //配置session的中间件

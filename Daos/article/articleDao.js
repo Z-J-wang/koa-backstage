@@ -1,13 +1,13 @@
 const model = require('../../util/model').article;
 const BaseDao = require('../util/baseDao');
 const { Op } = require('sequelize');
-
 // 文章
 class Dao extends BaseDao {
-	constructor() {
+	 constructor() {
 		super(model);
 	}
 
+	
 	/**
 	 * 条件分页查询
 	 * @param {*} startSeq // 首条数据的序号
