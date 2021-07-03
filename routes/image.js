@@ -41,7 +41,7 @@ router.post('/uploadImage', upload.single('file'), async function (ctx, next) {
 		ctx.body = {
 			code: res_code,
 			msg: res_msg,
-			data: res_data
+			url: res_data
 		};
 	}
 });
