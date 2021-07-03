@@ -2,7 +2,8 @@ const Dao = require('../../util/dao').articleDao;
 const BaseService = require('../util/baseBll');
 const TagsBll = require('./tagsBll');
 const CategoriesBll = require('./categoriesBll');
-
+const Image = require('../util/image');
+const image = new Image();
 class articleService extends BaseService {
 	constructor() {
 		super(Dao);
