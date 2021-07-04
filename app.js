@@ -32,8 +32,6 @@ const image = require('./routes/image');
 // route 引入部分 end ---------------------------------------------------
 
 const clearInvalidImage = require('./util/clearInvalidImage');
-console.log(clearInvalidImage)
-clearInvalidImage();
 app.keys = [secret]; /*cookie的签名*/
 
 //配置session的中间件
@@ -78,6 +76,7 @@ async function tokenFilter(ctx) {
   }
   let url = ctx.url;
   let token = ctx.header.authorization;
+  clearInvalidImage();
 
   if (
     url.split('/')[1] === 'api' &&

@@ -2,7 +2,7 @@
 
 /**
  * configure方法为配置log4js对象，内部有levels、appenders、categories三个属性
- * 
+ *
  * levels:
  *         配置日志的输出级别,共 ALL < TRACE < DEBUG < INFO < WARN < ERROR < FATAL < MARK < OFF 八个级别,default level is OFF
  *         只有大于等于日志配置级别的信息才能输出出来，可以通过category来有效的控制日志输出级别
@@ -19,26 +19,26 @@ const path = require('path');
 const log4js = require('koa-log4');
 
 log4js.configure({
-    appenders: {
-        access: {
-            type: 'dateFile',
-            pattern: '-yyyy-MM-dd.log', //生成文件的规则
-            filename: path.join('logs/', 'access.log') //生成文件名
-        },
-        application: {
-            type: 'dateFile',
-            pattern: '-yyyy-MM-dd.log',
-            filename: path.join('logs/', 'application.log')
-        },
-        out: {
-            type: 'console'
-        }
+  appenders: {
+    access: {
+      type: 'dateFile',
+      pattern: '-yyyy-MM-dd.log', //生成文件的规则
+      filename: path.join('logs/', 'access.log'), //生成文件名
     },
-    categories: {
-        default: { appenders: ['out'], level: 'info' },
-        access: { appenders: ['access'], level: 'info' },
-        application: { appenders: ['application'], level: 'WARN' }
-    }
+    application: {
+      type: 'dateFile',
+      pattern: '-yyyy-MM-dd.log',
+      filename: path.join('logs/', 'application.log'),
+    },
+    out: {
+      type: 'console',
+    },
+  },
+  categories: {
+    default: { appenders: ['out'], level: 'info' },
+    access: { appenders: ['access'], level: 'info' },
+    application: { appenders: ['application'], level: 'WARN' },
+  },
 });
 
 exports.accessLogger = () => log4js.koaLogger(log4js.getLogger('access')); //记录所有访问级别的日志

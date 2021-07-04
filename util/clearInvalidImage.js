@@ -3,8 +3,20 @@ const path = require('path');
 const models = require('./model');
 const { readFileList } = require('./common');
 
+const options = {
+  flags: 'a',
+  encoding: 'utf8', // utf8编码
+  autoClose: true,
+};
+const stderr = fs.createWriteStream('./logs/clearInvalidImage.log', options);
+const logger = new console.Console(stderr);
+// 创建logger
+
 async function clearInvalidImage() {
-  const imagesOfDatabase = await getImageOfDatebase();
+  if(!getLog()){
+    return false;
+  }
+    const imagesOfDatabase = await getImageOfDatebase();
 
   const imagesFileList = readFileList(__dirname + '../../public/tmp-upload');
   imagesFileList.forEach((file) => {
@@ -23,6 +35,7 @@ function deleteImage(filename) {
   return new Promise((resolve, reject) => {
     fs.unlink(`public\\tmp-upload\\${filename}`, function (err) {
       if (!err) {
+        logger.log(`${filename} - ${new Date()}`); // 将删除成功的文件记录在日志中
         resolve(true);
       } else {
         console.log(err);
@@ -85,6 +98,19 @@ function filterImage(data) {
   });
 
   return imgList;
+}
+
+function getLog() {
+  const fullPath = path.join(__dirname + '../../logs/clearInvalidImage.log');
+  const data = fs.readFileSync(fullPath, 'utf-8');
+  if (!data) {
+    return true;
+  }
+  const logs = data.split('\n');
+  const lastLog = logs[logs.length - 2];
+  const lastLogTime = new Date(lastLog.split(' - ')[1]);
+  const interval = new Date() - lastLogTime;
+  return interval / (60 * 60 * 1000) > 24;
 }
 
 module.exports = clearInvalidImage;
