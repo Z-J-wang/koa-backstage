@@ -1,8 +1,46 @@
+const fs = require('fs');
+const path = require('path');
 const models = require('./model');
+const { readFileList } = require('./common');
 
-async function clearInvalidImage(data) {
+async function clearInvalidImage() {
   const imagesOfDatabase = await getImageOfDatebase();
-  console.log(imagesOfDatabase);
+
+  const imagesFileList = readFileList(__dirname + '../../public/tmp-upload');
+  imagesFileList.forEach((file) => {
+    const fileName = path.basename(file);
+    if (isInvalidImage(fileName, imagesOfDatabase)) {
+      deleteImage(fileName);
+    }
+  });
+}
+
+/**
+ * 删除 upload 目录的文件
+ * @param {string} filename
+ */
+function deleteImage(filename) {
+  return new Promise((resolve, reject) => {
+    fs.unlink(`public\\tmp-upload\\${filename}`, function (err) {
+      if (!err) {
+        resolve(true);
+      } else {
+        console.log(err);
+        reject(false);
+      }
+    });
+  });
+}
+
+/**
+ * 判断是否是无效图片文件
+ * @param {*} filename 图片文件名
+ * @param {*} validList 有效图片集合
+ * @returns {Boolean}
+ */
+function isInvalidImage(filename, validList) {
+  // 不在 validList 集合中，且不是 .gitignore，则为无效图片
+  return filename !== '.gitignore' && validList.indexOf(filename) <= -1;
 }
 
 /**
