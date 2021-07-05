@@ -19,7 +19,7 @@ function uploads(filePath) {
 
   const limits = {
     fields: 10, //非文件字段的数量
-    fileSize: 10 * 1024, //文件大小 单位 b
+    fileSize: 10 * 1024 * 1024, //文件大小 单位 b
     files: 1, //文件数量
   };
   return multer({ storage: storage, limits: limits });

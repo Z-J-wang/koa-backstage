@@ -1,7 +1,7 @@
 const fs = require('fs');
 const router = require('koa-router')();
 const uploads = require('../util/uploads');
-const upload = uploads('./public/tmp-upload/');
+const upload = uploads('./public/upload/');
 
 router.prefix('/api');
 
