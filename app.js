@@ -31,7 +31,7 @@ const tags = require('./routes/article/tags');
 const image = require('./routes/image');
 // route 引入部分 end ---------------------------------------------------
 
-const clearInvalidImage = require('./util/clearInvalidImage');
+const ClearInvalidImage = require('./util/clearInvalidImage');
 app.keys = [secret]; /*cookie的签名*/
 
 //配置session的中间件
@@ -42,9 +42,9 @@ onerror(app);
 
 // middlewares
 app.use(
-  bodyparser({
-    enableTypes: ['json', 'form', 'text'],
-  })
+	bodyparser({
+		enableTypes: ['json', 'form', 'text']
+	})
 );
 app.use(json());
 app.use(logger());
@@ -52,62 +52,62 @@ app.use(accessLogger());
 app.use(require('koa-static')(__dirname + '/public'));
 
 app.use(
-  views(__dirname + '/views', {
-    extension: 'ejs',
-  })
+	views(__dirname + '/views', {
+		extension: 'ejs'
+	})
 );
 
 // logger
 app.use(async (ctx, next) => {
-  const start = new Date();
-  await next();
-  tokenFilter(ctx); // token 验证
-  const ms = new Date() - start;
-  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
+	const start = new Date();
+	await next();
+	tokenFilter(ctx); // token 验证
+	const ms = new Date() - start;
+	console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 
 /**
  * token 验证
  */
 async function tokenFilter(ctx) {
-  // 过滤 OPTIONS 请求
-  if (ctx.method == 'OPTIONS') {
-    return false;
-  }
-  let url = ctx.url;
-  let token = ctx.header.authorization;
-  clearInvalidImage();
+	// 过滤 OPTIONS 请求
+	if (ctx.method == 'OPTIONS') {
+		return false;
+	}
+	let url = ctx.url;
+	let token = ctx.header.authorization;
+	new ClearInvalidImage();  // 每次请求都要判断一下是否要执行无效图片清除操作
 
-  if (
-    url.split('/')[1] === 'api' &&
-    notNeedTokenApi.indexOf(url.split('?')[0]) <= -1
-  ) {
-    // 不在 notNeedTokenApi 数组中，需要进行 token 验证
-    if (!token || (await tokenFn.isAuthorization(token))) {
-      ctx.body = {
-        code: 403,
-        msg: 'token 验证失败',
-      };
-    }
-  }
+	if (
+		url.split('/')[1] === 'api' &&
+		notNeedTokenApi.indexOf(url.split('?')[0]) <= -1
+	) {
+		// 不在 notNeedTokenApi 数组中，需要进行 token 验证
+		if (!token || (await tokenFn.isAuthorization(token))) {
+			ctx.body = {
+				code: 403,
+				msg: 'token 验证失败'
+			};
+		}
+	}
 }
 
 // 配置跨域
 app.use(
-  cors({
-    origin: function (ctx) {
-      //设置允许来自指定域名请求
-      // if (ctx.url === '/test') {
-      //     return '*'; // 允许来自所有域名请求
-      // }
-      return ctx.header.origin; //只允许http://localhost:8080这个域名的请求
-    },
-    maxAge: 5, //指定本次预检请求的有效期，单位为秒。
-    credentials: true, //是否允许发送Cookie
-    allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], //设置所允许的HTTP请求方法
-    allowHeaders: ['Content-Type', 'Authorization', 'Accept'], //设置服务器支持的所有头信息字段
-    exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'], //设置获取其他自定义字段
-  })
+	cors({
+		origin: function (ctx) {
+			//设置允许来自指定域名请求
+			// if (ctx.url === '/test') {
+			//     return '*'; // 允许来自所有域名请求
+			// }
+			return ctx.header.origin; //只允许http://localhost:8080这个域名的请求
+		},
+		maxAge: 5, //指定本次预检请求的有效期，单位为秒。
+		credentials: true, //是否允许发送Cookie
+		allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], //设置所允许的HTTP请求方法
+		allowHeaders: ['Content-Type', 'Authorization', 'Accept'], //设置服务器支持的所有头信息字段
+		exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'] //设置获取其他自定义字段
+	})
 );
 
 // routes 路由配置
@@ -138,8 +138,8 @@ app.use(categories.routes(), categories.allowedMethods());
 
 // error-handling
 app.on('error', (err, ctx) => {
-  logger_koa4.error(err);
-  console.error('server error', err, ctx);
+	logger_koa4.error(err);
+	console.error('server error', err, ctx);
 });
 
 module.exports = app;
